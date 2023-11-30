@@ -4,13 +4,20 @@
 
 class AssocRecIngr
 {
+    private $id;
     private $idRec;
     private $idIngr;
 
-    public function __construct($idRec, $idIngr)
+    public function __construct($id, $idRec, $idIngr)
     {
+        $this->id = $id;
         $this->idRec = $idRec;
         $this->idIngr = $idIngr;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getIdRec()
@@ -23,6 +30,11 @@ class AssocRecIngr
         return $this->idIngr;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function setIdRec($idRec)
     {
         $this->idRec = $idRec;
@@ -33,7 +45,3 @@ class AssocRecIngr
         $this->idIngr = $idIngr;
     }
 }
-
-
-
-?>
