@@ -290,6 +290,29 @@ class RecipeDAO
             echo "Error during recipe deletion: " . $e->getMessage();
         }
     }
+
+    //Search recipes by name, ingredient or category
+    public function search($searchTerm)
+    {
+        try {
+            $sql = "SELECT r.id AS id, r.name AS name, r.difficulty AS difficulty, r.description AS description, r.time AS time, r.idCategory AS idCategory, c.name AS categoryName
+            FROM recipes r
+            JOIN categories c ON r.idCategory = c.id
+            WHERE r.name LIKE :term
+            OR r.id IN (SELECT idRecipe FROM assocrecingr WHERE idIngredient IN (SELECT id FROM ingredients WHERE name LIKE :term))
+            OR r.idCategory IN (SELECT id FROM categories WHERE name LIKE :term";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':term', $searchTerm);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during recipe reading: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for step of recipe table
