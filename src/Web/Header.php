@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,7 @@
     <!-- TOP PART OF HEADER -->
     <div class="header-main">
         <!-- CSS LIST OF CATEGORIES -->
-        <div class ="header-main-categorylist">
+        <div class="header-main-categorylist">
             <h3>Categories</h3>
 
         </div>
@@ -25,10 +26,11 @@
             <h3>Logo</h3>
 
         </div>
-        <!-- SEARCHBAR -->
+        <!-- SEARCHBAR BUTTON -->
         <div class="header-main-searchbar">
-            <h3>Recherche</h3>
-
+            <button type="button" class="header-main-searchbar-button" onclick="location.href = 'search.php'">
+                <h3>Recherche</h3>
+            </button>
         </div>
 
         <!-- LOGIN -->
@@ -43,15 +45,15 @@
         <div class="header-secondary-container">
             <div class="header-secondary-container-news">
                 <h3>Actus</h3>
-    
+
             </div>
             <div class="header-secondary-container-fastrecipe">
                 <h3>Recettes très très rapides</h3>
-    
+
             </div>
             <div class="header-secondary-container-bestrecipes">
                 <h3>Meilleures notes</h3>
-            
+
             </div>
         </div>
     </div>
