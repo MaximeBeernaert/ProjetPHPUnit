@@ -170,6 +170,27 @@ class IngredientDAO
             echo "Error during ingredient deletion: " . $e->getMessage();
         }
     }
+
+    //Read ingredients by recipe id
+    public function readByRecipeId($id)
+    {
+        try {
+            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price, i.image AS image, a.quantité AS quantity
+            FROM assocrecingr a
+            JOIN ingredients i ON a.idIngredient = i.id
+            WHERE a.idRecipe = :id";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during ingredient reading: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for recipes table
@@ -358,6 +379,24 @@ class StepsDAO
             return true;
         } catch (Exception $e) {
             echo "Error during step deletion: " . $e->getMessage();
+        }
+    }
+
+    //Read steps by recipe id
+    public function readByRecipeId($id)
+    {
+        try {
+            $sql = "SELECT * FROM steps WHERE idRecipe = :id";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during step reading: " . $e->getMessage();
         }
     }
 }

@@ -15,33 +15,51 @@
 require_once("config.php");
 require_once("DAO.php");
 
+//Include class
+require_once("src/Classes/recipe.php");
+require_once("src/Classes/ingredient.php");
+require_once("src/Classes/step.php");
+
 //Create DAO connexion
 $recipeDao = new RecipeDAO($db);
 $ingredientDao = new IngredientDAO($db);
 $stepsDao = new StepsDAO($db);
 
 //Retrive recipe id from URL
-$id = $_GET['id'];
+$id = 3; //DEVONLY
 
 //Retrive recipe from id
 $recipe = $recipeDao->read($id);
+//Create recipe object
+$recipe = new Recipe($recipe["id"], $recipe["name"], $recipe["difficulty"], $recipe["description"], $recipe["time"], $recipe["image"], $recipe["idCategory"]);
 
+//Retrive ingredient from recipe id
+$ingredients = $ingredientDao->readByRecipeId($id);
+//For each ingredient, create an object
+foreach ($ingredients as $ingredient) {
+    $ingredient = new Ingredient($ingredient["id"], $ingredient["name"], $ingredient["price"], $ingredient["image"], $ingredient["quantity"]);
+}
 
-
+//Retrive steps from recipe id
+$steps = $stepsDao->readByRecipeId($id);
+//For each step, create an object
+foreach ($steps as $step) {
+    $step = new Step($step["id"], $step["idRecipe"], $step["number"], $step["description"]);
+}
 
 ?>
 
 <body>
 
     <!-- Include Header -->
-    <!-- TODO -->
+    <!-- <?php include("header.php"); ?> -->
 
     <!-- Display chooseen recipe -->
     <div class="recipe-container">
 
         <!-- Title of the recipe -->
         <div class="recipe-title">
-            <h1>Titre de la recette</h1>
+            <?php echo $recipe->getName(); ?>
         </div>
 
         <!-- Recipe info -->
@@ -49,13 +67,18 @@ $recipe = $recipeDao->read($id);
 
             <!-- Recipe IMG -->
             <div class="recipe-info-img">
-                IMAGE DE LA RECETTE
+                <img src="<?php echo $recipe->getImage(); ?>" alt="Image de la recette">
             </div>
 
             <!-- Recipe text : time todo, price etc -->
             <div class="recipe-info-text">
-                TEMPS
-                PRIX
+                <div class="recipe-info-text-time">
+                    <?php echo $recipe->getTime(); ?>
+                </div>
+                <div class="recipe-info-text-difficulty">
+                    <?php echo $recipe->getDifficulty(); ?>
+                </div>
+
             </div>
 
         </div>
@@ -65,16 +88,27 @@ $recipe = $recipeDao->read($id);
 
             <!-- Recipe ingredients -->
             <div class="recipe-ingredients-list">
-                INGREDIENTS1
-                INGREDIENTS2
-                INGREDIENTS3
+                <?php
+                foreach ($ingredients as $ingredient) {
+                    echo '<div>';
+                    echo '<p><strong>Nom:</strong> ' . $ingredient['name'] . '</p>';
+                    echo '<p><strong>Prix:</strong> ' . $ingredient['price'] . ' €</p>';
+                    echo '<p><strong>Quantité:</strong> ' . $ingredient['quantity'] . '</p>';
+                    echo '<img src="' . $ingredient['image'] . '" alt="' . $ingredient['name'] . '">';
+                    echo '</div>';
+                }
+                ?>
             </div>
 
             <!-- Recipe steps -->
             <div class="recipe-steps">
-                STEPS1
-                STEPS2
-                STEPS3
+                <?php
+                foreach ($steps as $step) {
+                    echo '<div>';
+                    echo '<p><strong>Etape ' . $step['number'] . ':</strong> ' . $step['description'] . '</p>';
+                    echo '</div>';
+                }
+                ?>
             </div>
 
         </div>
