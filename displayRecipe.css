@@ -7,25 +7,45 @@
 }
 
 .recipe-info{
+    margin: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: blue;
 }
 
 .recipe-info-img{
+    display: flex;
+    align-items: center;
+    width: 300px;
+    height: 300px;
     background-color: orange;
 }
 
 .recipe-info-text{
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 300px;
     background-color: pink;
 }
 
 .recipe-doing{
+    margin: 50px;
     background-color: yellow;
 }
 
 .recipe-ingredients-list{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
     background-color: red;
 }
 
 .recipe-steps{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     background-color: purple;
 }

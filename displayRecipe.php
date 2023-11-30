@@ -44,12 +44,16 @@
 
             <!-- Recipe ingredients -->
             <div class="recipe-ingredients-list">
-                INGREDIENTS
+                INGREDIENTS1
+                INGREDIENTS2
+                INGREDIENTS3
             </div>
 
             <!-- Recipe steps -->
             <div class="recipe-steps">
-                STEPS
+                STEPS1
+                STEPS2
+                STEPS3
             </div>
 
         </div>
