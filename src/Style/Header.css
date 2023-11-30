@@ -3,23 +3,19 @@
     top: 0;
     z-index: 999;
 }
-.header-main, .header-secondary{
+.header-main, .header-secondary, .header-main-left{
     display: flex;
 }
 
 .header-main{
     align-items: center;
+    justify-content: space-between;
     padding: 0 1rem;
     background-color: #fff;
     border-bottom: 1px solid #e6e6e6;
 }
 
-.header-main-categorylist {
-    width: 100px;
-    margin: 0 1rem;
-}
-
-.header-main-logo {
+.header-main-logo, .header-main-searchbar, .header-main-categorylist, .header-main-login {
     width: 100px;
     margin: 0 1rem;
 }

@@ -1,0 +1,43 @@
+.searchmenu{
+    margin : 2em 16em;
+    padding: 1em 1em;
+    min-height: 40em;
+    background-color: beige;
+}
+
+.searchmenu-terms{
+    font-size: 1.5em;
+    margin: 0.5em 4em;
+
+}
+
+.searchmenu-results{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.searchmenu-results-result-container{
+    margin: 2em 1em;
+    width: 16em;
+    background-color: lightgray;
+    height: 20em;
+}
+
+.searchmenu-results-result-container-image{
+    height: 14em;
+    width: 100%;
+    background-color: gray;
+    margin: 0 auto;
+}
+
+.searchmenu-results-result-container-image-img{
+    height: 14em;
+    width: 100%;
+    object-fit: cover;
+}
+
+.seachmenu-results-result-container-title{
+    margin: 0.5em 0.5em;
+    font-size: 1.5em;
+}

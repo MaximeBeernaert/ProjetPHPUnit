@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recette</title>
-    <link rel="stylesheet" href="src/Style/displayRecipe.css">
+    <link rel="stylesheet" href="../Style/displayRecipe.css">
 </head>
 
 <!-- DB call to retrive recipe, ingrediant and step -->
 <?php
 
 //Include DAO & connexion
-require_once("config.php");
-require_once("DAO.php");
+require_once("../../config.php");
+require_once("../../DAO.php");
 
 //Include class
-require_once("src/Classes/recipe.php");
-require_once("src/Classes/ingredient.php");
-require_once("src/Classes/step.php");
+require_once("../Classes/recipe.php");
+require_once("../Classes/ingredient.php");
+require_once("../Classes/step.php");
 
 //Create DAO connexion
 $recipeDao = new RecipeDAO($db);
