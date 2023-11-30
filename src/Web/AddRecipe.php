@@ -11,14 +11,14 @@
 <?php
 
 //Include DAO & connexion
-//require_once("config.php");
-//require_once("DAO.php");
+require_once("../../config.php");
+require_once("../../DAO.php");
 
 //Include class
-//require_once("src/Classes/recipe.php");
+require_once("../Classes/recipe.php");
 
 //Create DAO connexion
-//i$recipeDao = new RecipeDAO($db);
+$recipeDAO = new RecipeDAO($db);
 
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,22 +30,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the format of the duration is valid
         $tempsRealisation = $_POST['temps_realisation'];
 
-        if (preg_match('/(\d+)h(\d+)min/', $tempsRealisation, $matches)) {
+        if (preg_match('/(\d+)(h(\d+)min)?/', $tempsRealisation, $matches)) {
             $heures = intval($matches[1]); // Convert the part corresponding to the hours to an integer
-            $minutes = intval($matches[2]);
+            $minutes = isset($matches[3]) ? intval($matches[3]) : 0; // Convert the part corresponding to the minutes to an integer, or set it to 0 if it doesn't exist
 
-            // Format the duration to the SQL format
+            // Format the duration to be stored in the database
             $tempsFormatSQL = sprintf("%02d:%02d:00", $heures, $minutes);
+
+            //Format for category
+            $categorie = $_POST['categorie'];
+
+            switch ($categorie) {
+                case "entree":
+                    $categorie = 1;
+                    break;
+                case "plat":
+                    $categorie = 2;
+                    break;
+                case "dessert":
+                    $categorie = 3;
+                    break;
+            }
 
             // Get the values from the form and store them in variables
             $nomRecette = $_POST['nom_recette'];
             $difficulte = $_POST['difficulte'];
             $description = $_POST['description'];
             $photoRecette = $_POST['photo_recette'];
-            $categorie = $_POST['categorie'];
 
             // Create a new recipe object
-            $recipe = new Recipe("", $nomRecette, $difficulte, $description, $tempsFormatSQL, $photoRecette, $categorie);
+            $recipe = new Recipe("", "", "", "", "", "");
+
+            // Set the values of the recipe object
+            $recipe->setName($nomRecette);
+            $recipe->setDifficulty($difficulte);
+            $recipe->setDescription($description);
+            $recipe->setTime($tempsFormatSQL);
+            $recipe->setImage($photoRecette);
+            $recipe->setIdCategory($categorie);
 
             // Call the create method from the DAO
             $recipeDAO->create($recipe);
