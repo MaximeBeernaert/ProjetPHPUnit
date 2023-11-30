@@ -55,6 +55,10 @@
                 <h3>Meilleures notes</h3>
 
             </div>
+            <div class="header-secondary-container-seerecipes">
+                <h3>Gérer les recettes</h3>
+            
+            </div>
         </div>
     </div>
 </div>

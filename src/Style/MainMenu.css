@@ -1,0 +1,133 @@
+.mainmenu{
+    margin : 2em 16em;
+    padding: 1em 1em;
+    min-height: 40em;
+    background-color: beige;
+}
+
+
+.mainmenu-inthenews-container-recipes{
+    /* min-height: 40em; */
+    display:flex;
+}
+
+.mainmenu-inthenews-container-recipes-primary{
+    width:40em;
+    height:25em;
+    margin:2em 1em;
+}
+
+.mainmenu-inthenews-container-recipes-primary-recipe{
+    height:25em;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.mainmenu-inthenews-container-recipes-secondary{
+    margin:2em 1em;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+}
+
+.mainmenu-inthenews-container-recipes-secondary-recipe{
+    height:10em;
+}
+
+.mainmenu-recipeoftheday-container-recipe{
+    margin:5px;
+    height:10em;
+}
+
+.mainmenu-inthenews-container-recipes-primary-recipe-info{
+    display:flex;
+    justify-content:space-between;
+}
+
+.mainmenu-inthenews-container-recipes-primary-recipe-info-right{
+    width: 8em;
+}
+
+.mainmenu-inthenews-container-recipes-primary-recipe-image-container{
+    height: 30em;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Image INTHENEWS Primary */
+
+.mainmenu-inthenews-container-recipes-primary-recipe-image {
+    position: relative;
+  }
+  
+.mainmenu-inthenews-container-recipes-primary-recipe-image img {
+    width: 100%;
+    height: 20em;
+
+    object-fit: cover;
+}
+
+.overlay-text-1 {
+  position: absolute;
+  top: 90%; 
+  left: 30%; 
+  transform: translate(-50%, -50%); 
+  padding: 10px 20px; 
+  font-size: 20px; 
+  /* text-align: center; */
+}
+
+
+
+
+.mainmenu-inthenews-container-recipes-secondary-recipe-image-container{
+    height: 3em;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Image INTHENEWS Secondary */
+
+.mainmenu-inthenews-container-recipes-secondary-recipe-image {
+    position: relative;
+  }
+  
+.mainmenu-inthenews-container-recipes-secondary-recipe-image img {
+    width: 100%;
+    height: 10em;
+
+    object-fit: cover;
+}
+
+.overlay-text-2 {
+  position: absolute;
+  top: 85%; 
+  left: 52%; 
+  transform: translate(-50%, -50%); 
+  padding: 10px 20px; 
+  font-size: 20px; 
+  width: 100%;
+  /* text-align: center; */
+}
+
+
+.mainmenu-recipeoftheday-container-recipe{
+    display: flex;
+    width: 100%;
+    margin:2em 10px;
+}
+
+.mainmenu-recipeoftheday-container-recipe-image img{
+    width: 20em;
+    height: 10em;
+    object-fit: cover;
+}
+
+.mainmenu-recipeoftheday-container-recipe-info{
+    margin-left : 2em;
+}
+
+.mainmenu-recipeoftheday-container-recipe-info-text{
+    margin-left: 3em;
+}
