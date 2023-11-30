@@ -1,0 +1,33 @@
+.mainmenu{
+    margin : 2em 16em;
+    padding: 1em 1em;
+    min-height: 40em;
+    background-color: beige;
+}
+
+
+.mainmenu-inthenews-container-recipes{
+    /* min-height: 40em; */
+    display:flex;
+}
+
+.mainmenu-inthenews-container-recipes-primary{
+    width:40em;
+    height:25em;
+}
+
+.mainmenu-inthenews-container-recipes-primary-recipe{
+    height:25em;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.mainmenu-inthenews-container-recipes-secondary-recipe{
+    height:12em;
+}
+
+.mainmenu-recipeoftheday-container-recipe{
+    margin:5px;
+    height:10em;
+}
