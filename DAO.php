@@ -195,6 +195,86 @@ class StepsDAO
     {
         $this->bd = $bd;
     }
+
+    //Create a new step
+    public function create(Step $step)
+    {
+        try {
+            $idRecipe = $step->getIdRecipe();
+            $number = $step->getNumber();
+            $description = $step->getDescription();
+
+            $sql = "INSERT INTO steps (idRecipe, number, description) VALUES (:idRecipe, :number, :description)";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':idRecipe', $idRecipe);
+            $stmt->bindParam(':number', $number);
+            $stmt->bindParam(':description', $description);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during step creation: " . $e->getMessage();
+        }
+    }
+
+    //Read a step
+    public function read($id)
+    {
+        try {
+            $sql = "SELECT * FROM steps WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during step reading: " . $e->getMessage();
+        }
+    }
+
+    //Update a step
+    public function update(Step $step)
+    {
+        try {
+            $id = $step->getId();
+            $idRecipe = $step->getIdRecipe();
+            $number = $step->getNumber();
+            $description = $step->getDescription();
+
+            $sql = "UPDATE steps SET idRecipe = :idRecipe, number = :number, description = :description WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':idRecipe', $idRecipe);
+            $stmt->bindParam(':number', $number);
+            $stmt->bindParam(':description', $description);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during step update: " . $e->getMessage();
+        }
+    }
+
+    //Delete a step
+    public function delete($id)
+    {
+        try {
+            $sql = "DELETE FROM steps WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during step deletion: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for association recipe-ingredient table
@@ -205,5 +285,81 @@ class AssocrecingrDAO
     public function __construct($bd)
     {
         $this->bd = $bd;
+    }
+
+    //Create a new association
+    public function create(Assocrecingr $assocrecingr)
+    {
+        try {
+            $idRecipe = $assocrecingr->getIdRec();
+            $idIngredient = $assocrecingr->getIdIngr();
+
+            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient) VALUES (:idRecipe, :idIngredient)";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':idRecipe', $idRecipe);
+            $stmt->bindParam(':idIngredient', $idIngredient);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during association creation: " . $e->getMessage();
+        }
+    }
+
+    //Read an association
+    public function read($id)
+    {
+        try {
+            $sql = "SELECT * FROM assocrecingr WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during association reading: " . $e->getMessage();
+        }
+    }
+
+    //Update an association
+    public function update(Assocrecingr $assocrecingr)
+    {
+        try {
+            $id = $assocrecingr->getId();
+            $idRecipe = $assocrecingr->getIdRec();
+            $idIngredient = $assocrecingr->getIdIngr();
+
+            $sql = "UPDATE assocrecingr SET idRecipe = :idRecipe, idIngredient = :idIngredient WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':idRecipe', $idRecipe);
+            $stmt->bindParam(':idIngredient', $idIngredient);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during association update: " . $e->getMessage();
+        }
+    }
+
+    //Delete an association
+    public function delete($id)
+    {
+        try {
+            $sql = "DELETE FROM assocrecingr WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during association deletion: " . $e->getMessage();
+        }
     }
 }
