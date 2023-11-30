@@ -20,6 +20,8 @@ require_once("../Classes/recipe.php");
 //Create DAO connexion
 $recipeDAO = new RecipeDAO($db);
 
+$confirmationMessage = "";
+
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if all required fields are filled
@@ -31,10 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tempsRealisation = $_POST['temps_realisation'];
 
         if (preg_match('/(\d+)(h(\d+)min)?/', $tempsRealisation, $matches)) {
-            $heures = intval($matches[1]); // Convert the part corresponding to the hours to an integer
-            $minutes = isset($matches[3]) ? intval($matches[3]) : 0; // Convert the part corresponding to the minutes to an integer, or set it to 0 if it doesn't exist
+            $heures = floor($matches[1]); // Partie entière des heures
+            $minutes = isset($matches[3]) ? floor($matches[3]) : 0; // Partie entière des minutes si elles existent, sinon 0
 
-            // Format the duration to be stored in the database
+            // Convertir les minutes en heures si elles dépassent 60
+            $heures += floor($minutes / 60);
+            $minutes = $minutes % 60;
+
+            // Formatage du temps au format SQL
             $tempsFormatSQL = sprintf("%02d:%02d:00", $heures, $minutes);
 
             //Format for category
@@ -73,14 +79,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $recipeDAO->create($recipe);
 
             // Display a success message
-            echo "<p>La recette a été ajoutée avec succès !</p>";
+            $confirmationMessage = "La recette a été ajoutée avec succès !";
+            $confirmationClass = "success";
         } else {
             // Display an error message if the format of the duration is not valid
-            echo "<p>Le format de la durée de réalisation n'est pas valide</p>";
+            $confirmationMessage = "Le format de la durée de réalisation n'est pas valide";
+            $confirmationClass = "error";
         }
     } else {
         // Display an error message if a required field is empty
-        echo "<p>Tous les champs du formulaire doivent être remplis.</p>";
+        $confirmationMessage = "Tous les champs doivent être remplis.";
+        $confirmationClass = "error";
     }
 }
 ?>
@@ -117,7 +126,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <input type="submit" value="Ajouter la recette">
         </form>
+        <div class="confirmation-message <?php echo $confirmationClass; ?> <?php echo !empty($confirmationMessage) ? 'show' : ''; ?>">
+            <?php echo $confirmationMessage; ?>
+        </div>
     </div>
 </body>
 
 </html>
+
+<script>
+    const confirmationMessage = document.querySelector('.confirmation-message');
+
+    if (confirmationMessage) {
+        if (confirmationMessage.classList.contains('show')) {
+            setTimeout(() => {
+                confirmationMessage.classList.remove('show');
+                confirmationMessage.classList.add('hide');
+                // Animation de disparition après 5 secondes
+                setTimeout(() => {
+                    confirmationMessage.style.display = 'none';
+                }, 500);
+            }, 5000);
+        }
+    }
+</script>

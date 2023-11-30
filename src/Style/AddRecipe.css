@@ -36,3 +36,60 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #45a049;
 }
+
+/* Style pour la div de confirmation */
+.confirmation-message {
+    display: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    animation-duration: 0.5s;
+}
+
+/* Animation d'apparition */
+.confirmation-message.show {
+    animation-name: fade-in;
+    display: block;
+}
+
+/* Animation de disparition */
+.confirmation-message.hide {
+    animation-name: fade-out;
+    display: block;
+}
+
+/* Couleur pour un message de confirmation réussi */
+.confirmation-message.success {
+    background-color: #4caf50; /* Vert */
+    color: white;
+}
+
+/* Couleur pour un message de confirmation d'erreur */
+.confirmation-message.error {
+    background-color: #f44336; /* Rouge */
+    color: white;
+}
+
+/* Animation d'apparition */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation de disparition */
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
