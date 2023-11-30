@@ -2,5 +2,6 @@ Launch project :
 
 -- get the project throught git
 
--- command : composer require --dev
+install phpunit
+-- command : composer require --dev phpunit/phpunit
 
