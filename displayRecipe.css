@@ -1,0 +1,31 @@
+.recipe-container{
+    background-color: gray;
+}
+
+.recipe-title{
+    background-color: green;
+}
+
+.recipe-info{
+    background-color: blue;
+}
+
+.recipe-info-img{
+    background-color: orange;
+}
+
+.recipe-info-text{
+    background-color: pink;
+}
+
+.recipe-doing{
+    background-color: yellow;
+}
+
+.recipe-ingredients-list{
+    background-color: red;
+}
+
+.recipe-steps{
+    background-color: purple;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recette</title>
+    <link rel="stylesheet" href="displayRecipe.css">
+</head>
+
+
+
+<body>
+
+    <!-- Include Header -->
+    <!-- TODO -->
+
+    <!-- Display chooseen recipe -->
+    <div class="recipe-container">
+
+        <!-- Title of the recipe -->
+        <div class="recipe-title">
+            <h1>Titre de la recette</h1>
+        </div>
+
+        <!-- Recipe info -->
+        <div class="recipe-info">
+
+            <!-- Recipe IMG -->
+            <div class="recipe-info-img">
+                IMAGE DE LA RECETTE
+            </div>
+
+            <!-- Recipe text : time todo, price etc -->
+            <div class="recipe-info-text">
+                TEMPS
+                PRIX
+            </div>
+
+        </div>
+
+        <!-- Recipe ingredients & step -->
+        <div class="recipe-doing">
+
+            <!-- Recipe ingredients -->
+            <div class="recipe-ingredients-list">
+                INGREDIENTS
+            </div>
+
+            <!-- Recipe steps -->
+            <div class="recipe-steps">
+                STEPS
+            </div>
+
+        </div>
+</body>
+
+</html>
