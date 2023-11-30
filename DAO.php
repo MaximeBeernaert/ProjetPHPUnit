@@ -299,16 +299,18 @@ class RecipeDAO
             FROM recipes r
             JOIN categories c ON r.idCategory = c.id
             WHERE r.name LIKE :term
-            OR r.id IN (SELECT idRecipe FROM assocrecingr WHERE idIngredient IN (SELECT id FROM ingredients WHERE name LIKE :term))
-            OR r.idCategory IN (SELECT id FROM categories WHERE name LIKE :term";
+            OR r.id IN (SELECT idRecipe FROM assocrecingr WHERE idIngredient IN (SELECT id FROM ingredients WHERE name LIKE :term ))
+            OR r.idCategory IN (SELECT id FROM categories WHERE name LIKE :term )";
             $stmt = $this->db->prepare($sql);
 
+            $searchTerm = "%" . $searchTerm . "%";
             $stmt->bindParam(':term', $searchTerm);
             $stmt->execute();
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
+
         } catch (Exception $e) {
             echo "Error during recipe reading: " . $e->getMessage();
         }
