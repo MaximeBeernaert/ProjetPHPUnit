@@ -105,6 +105,7 @@ CREATE TABLE `recipes` (
   `time` time DEFAULT NULL,
   `image` varchar(200) DEFAULT NULL,
   `idCategory` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -156,4 +157,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-30 10:46:09
+-- Dump completed on 2023-11-30 12:06:35
