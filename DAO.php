@@ -184,6 +184,94 @@ class RecipeDAO
     {
         $this->bd = $bd;
     }
+
+    //Create a new recipe
+    public function create(Recipe $recipe)
+    {
+        try {
+            $name = $recipe->getName();
+            $difficulty = $recipe->getDifficulty();
+            $description = $recipe->getDescription();
+            $time = $recipe->getTime();
+            $idCategory = $recipe->getIdCategory();
+
+            $sql = "INSERT INTO recipes (name, difficulty, description, time, idCategory) VALUES (:name, :difficulty, :description, :time, :idCategory)";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':difficulty', $difficulty);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':time', $time);
+            $stmt->bindParam(':idCategory', $idCategory);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during recipe creation: " . $e->getMessage();
+        }
+    }
+
+    //Read a recipe
+    public function read($id)
+    {
+        try {
+            $sql = "SELECT * FROM recipes WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during recipe reading: " . $e->getMessage();
+        }
+    }
+
+    //Update a recipe
+    public function update(Recipe $recipe)
+    {
+        try {
+            $id = $recipe->getId();
+            $name = $recipe->getName();
+            $difficulty = $recipe->getDifficulty();
+            $description = $recipe->getDescription();
+            $time = $recipe->getTime();
+            $idCategory = $recipe->getIdCategory();
+
+            $sql = "UPDATE recipes SET name = :name, difficulty = :difficulty, description = :description, time = :time, idCategory = :idCategory WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':difficulty', $difficulty);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':time', $time);
+            $stmt->bindParam(':idCategory', $idCategory);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during recipe update: " . $e->getMessage();
+        }
+    }
+
+    //Delete a recipe
+    public function delete($id)
+    {
+        try {
+            $sql = "DELETE FROM recipes WHERE id = :id";
+            $stmt = $this->bd->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during recipe deletion: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for step of recipe table
