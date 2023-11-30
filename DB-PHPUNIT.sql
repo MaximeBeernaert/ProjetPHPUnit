@@ -28,6 +28,7 @@ CREATE TABLE `assocrecingr` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idRecipe` int(11) NOT NULL,
   `idIngredient` int(11) NOT NULL,
+  `quantité` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -53,7 +54,7 @@ CREATE TABLE `categories` (
   `name` varchar(100) NOT NULL,
   `image` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +63,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Entrée','entree.jpg'),(2,'Plat principal','plat.jpg'),(3,'Dessert','dessert.jpg');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +80,7 @@ CREATE TABLE `ingredients` (
   `price` float NOT NULL,
   `image` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,6 +89,7 @@ CREATE TABLE `ingredients` (
 
 LOCK TABLES `ingredients` WRITE;
 /*!40000 ALTER TABLE `ingredients` DISABLE KEYS */;
+INSERT INTO `ingredients` VALUES (1,'Farine',2.5,'farine.jpg'),(2,'Oeufs',1.2,'oeufs.jpg'),(3,'Sucre',1,'sucre.jpg');
 /*!40000 ALTER TABLE `ingredients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +110,7 @@ CREATE TABLE `recipes` (
   `idCategory` int(11) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +119,7 @@ CREATE TABLE `recipes` (
 
 LOCK TABLES `recipes` WRITE;
 /*!40000 ALTER TABLE `recipes` DISABLE KEYS */;
+INSERT INTO `recipes` VALUES (1,'Tarte aux pommes',3.5,'Délicieuse tarte aux pommes faite maison.','02:30:00','tarte.jpg',3,'2023-11-30 11:51:31'),(2,'Poulet rôti',4,'Un poulet rôti croustillant et savoureux.','01:45:00','poulet.jpg',2,'2023-11-30 11:51:31'),(3,'Salade César',2,'Une salade fraîche et délicieuse avec sa sauce César.','00:30:00','salade.jpg',1,'2023-11-30 11:51:31');
 /*!40000 ALTER TABLE `recipes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +136,7 @@ CREATE TABLE `steps` (
   `number` int(11) NOT NULL,
   `description` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,6 +145,7 @@ CREATE TABLE `steps` (
 
 LOCK TABLES `steps` WRITE;
 /*!40000 ALTER TABLE `steps` DISABLE KEYS */;
+INSERT INTO `steps` VALUES (1,1,1,'Préparez la pâte et étalez-la dans le moule.'),(2,1,2,'Épluchez et coupez les pommes, puis disposez-les sur la pâte.'),(3,1,3,'Saupoudrez de sucre et faites cuire au four.'),(4,3,1,'Préparez la sauce César et réservez-la.'),(5,3,2,'Coupez les ingrédients de la salade et mélangez-les dans un grand bol.'),(6,3,3,'Ajoutez la sauce et mélangez bien avant de servir.');
 /*!40000 ALTER TABLE `steps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-30 12:06:35
+-- Dump completed on 2023-11-30 12:56:57
