@@ -8,7 +8,28 @@
     <link rel="stylesheet" href="displayRecipe.css">
 </head>
 
+<!-- DB call to retrive recipe, ingrediant and step -->
+<?php
 
+//Include DAO & connexion
+require_once("config.php");
+require_once("DAO.php");
+
+//Create DAO connexion
+$recipeDao = new RecipeDAO($db);
+$ingredientDao = new IngredientDAO($db);
+$stepsDao = new StepsDAO($db);
+
+//Retrive recipe id from URL
+$id = $_GET['id'];
+
+//Retrive recipe from id
+$recipe = $recipeDao->read($id);
+
+
+
+
+?>
 
 <body>
 

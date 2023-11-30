@@ -2,17 +2,14 @@
 
 require_once('config.php');
 
-// DAO = Data Access Object
-
-
 //CRUD for category table
 class CategoryDAO
 {
-    private $bd;
+    private $db;
 
-    public function __construct($bd)
+    public function __construct($db)
     {
-        $this->bd = $bd;
+        $this->db = $db;
     }
 
     //Create a new category
@@ -22,7 +19,7 @@ class CategoryDAO
             $name = $category->getName();
 
             $sql = "INSERT INTO category (name) VALUES (:name)";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
             $stmt->execute();
@@ -38,7 +35,7 @@ class CategoryDAO
     {
         try {
             $sql = "SELECT * FROM category WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -59,7 +56,7 @@ class CategoryDAO
             $name = $category->getName();
 
             $sql = "UPDATE category SET name = :name WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':name', $name);
@@ -76,7 +73,7 @@ class CategoryDAO
     {
         try {
             $sql = "DELETE FROM category WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -91,11 +88,11 @@ class CategoryDAO
 //CRUD for ingredient table
 class IngredientDAO
 {
-    private $bd;
+    private $db;
 
-    public function __construct($bd)
+    public function __construct($db)
     {
-        $this->bd = $bd;
+        $this->db = $db;
     }
 
     //Create a new ingredient
@@ -106,7 +103,7 @@ class IngredientDAO
             $price = $ingredient->getPrice();
 
             $sql = "INSERT INTO ingredient (name, price) VALUES (:name, :price)";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':price', $price);
@@ -123,7 +120,7 @@ class IngredientDAO
     {
         try {
             $sql = "SELECT * FROM ingredient WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -145,7 +142,7 @@ class IngredientDAO
             $price = $ingredient->getPrice();
 
             $sql = "UPDATE ingredient SET name = :name, price = :price WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':name', $name);
@@ -163,7 +160,7 @@ class IngredientDAO
     {
         try {
             $sql = "DELETE FROM ingredient WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -178,11 +175,11 @@ class IngredientDAO
 //CRUD for recipes table
 class RecipeDAO
 {
-    private $bd;
+    private $db;
 
-    public function __construct($bd)
+    public function __construct($db)
     {
-        $this->bd = $bd;
+        $this->db = $db;
     }
 
     //Create a new recipe
@@ -196,7 +193,7 @@ class RecipeDAO
             $idCategory = $recipe->getIdCategory();
 
             $sql = "INSERT INTO recipes (name, difficulty, description, time, idCategory) VALUES (:name, :difficulty, :description, :time, :idCategory)";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':difficulty', $difficulty);
@@ -216,7 +213,7 @@ class RecipeDAO
     {
         try {
             $sql = "SELECT * FROM recipes WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -241,7 +238,7 @@ class RecipeDAO
             $idCategory = $recipe->getIdCategory();
 
             $sql = "UPDATE recipes SET name = :name, difficulty = :difficulty, description = :description, time = :time, idCategory = :idCategory WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':name', $name);
@@ -262,7 +259,7 @@ class RecipeDAO
     {
         try {
             $sql = "DELETE FROM recipes WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -277,11 +274,11 @@ class RecipeDAO
 //CRUD for step of recipe table
 class StepsDAO
 {
-    private $bd;
+    private $db;
 
-    public function __construct($bd)
+    public function __construct($db)
     {
-        $this->bd = $bd;
+        $this->db = $db;
     }
 
     //Create a new step
@@ -293,7 +290,7 @@ class StepsDAO
             $description = $step->getDescription();
 
             $sql = "INSERT INTO steps (idRecipe, number, description) VALUES (:idRecipe, :number, :description)";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':idRecipe', $idRecipe);
             $stmt->bindParam(':number', $number);
@@ -311,7 +308,7 @@ class StepsDAO
     {
         try {
             $sql = "SELECT * FROM steps WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -334,7 +331,7 @@ class StepsDAO
             $description = $step->getDescription();
 
             $sql = "UPDATE steps SET idRecipe = :idRecipe, number = :number, description = :description WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':idRecipe', $idRecipe);
@@ -353,7 +350,7 @@ class StepsDAO
     {
         try {
             $sql = "DELETE FROM steps WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -368,11 +365,11 @@ class StepsDAO
 //CRUD for association recipe-ingredient table
 class AssocrecingrDAO
 {
-    private $bd;
+    private $db;
 
-    public function __construct($bd)
+    public function __construct($db)
     {
-        $this->bd = $bd;
+        $this->db = $db;
     }
 
     //Create a new association
@@ -383,7 +380,7 @@ class AssocrecingrDAO
             $idIngredient = $assocrecingr->getIdIngr();
 
             $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient) VALUES (:idRecipe, :idIngredient)";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':idRecipe', $idRecipe);
             $stmt->bindParam(':idIngredient', $idIngredient);
@@ -400,7 +397,7 @@ class AssocrecingrDAO
     {
         try {
             $sql = "SELECT * FROM assocrecingr WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -422,7 +419,7 @@ class AssocrecingrDAO
             $idIngredient = $assocrecingr->getIdIngr();
 
             $sql = "UPDATE assocrecingr SET idRecipe = :idRecipe, idIngredient = :idIngredient WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':idRecipe', $idRecipe);
@@ -440,7 +437,7 @@ class AssocrecingrDAO
     {
         try {
             $sql = "DELETE FROM assocrecingr WHERE id = :id";
-            $stmt = $this->bd->prepare($sql);
+            $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
