@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recette</title>
-    <link rel="stylesheet" href="displayRecipe.css">
+    <link rel="stylesheet" href="src/Style/displayRecipe.css">
 </head>
 
 <!-- DB call to retrive recipe, ingrediant and step -->
@@ -52,7 +52,7 @@ foreach ($steps as $step) {
 <body>
 
     <!-- Include Header -->
-    <!-- <?php include("header.php"); ?> -->
+    <?php include("header.php"); ?>
 
     <!-- Display chooseen recipe -->
     <div class="recipe-container">
