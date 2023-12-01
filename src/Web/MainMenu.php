@@ -150,7 +150,6 @@ function getMainMenuRecipes(){
         async:      true,
         success: function(data) {
             // Display results from the call as recipes cards
-            console.log(data); 
 
             // In the news primary
             document.getElementById("mainmenu-inthenews-container-recipes-primary-recipe-image-img").src = data.arrayRecipes['INTHENEWS-PRIMARY'].image;

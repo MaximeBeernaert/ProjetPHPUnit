@@ -18,7 +18,7 @@ class CategoryDAO
         try {
             $name = $category->getName();
 
-            $sql = "INSERT INTO category (name) VALUES (:name)";
+            $sql = "INSERT INTO categories (name) VALUES (:name)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
@@ -34,7 +34,7 @@ class CategoryDAO
     public function read($id)
     {
         try {
-            $sql = "SELECT * FROM category WHERE id = :id";
+            $sql = "SELECT * FROM categories WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
@@ -55,7 +55,7 @@ class CategoryDAO
             $id = $category->getId();
             $name = $category->getName();
 
-            $sql = "UPDATE category SET name = :name WHERE id = :id";
+            $sql = "UPDATE categories SET name = :name WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
@@ -72,7 +72,7 @@ class CategoryDAO
     public function delete($id)
     {
         try {
-            $sql = "DELETE FROM category WHERE id = :id";
+            $sql = "DELETE FROM categories WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
@@ -81,6 +81,22 @@ class CategoryDAO
             return true;
         } catch (Exception $e) {
             echo "Error during category deletion: " . $e->getMessage();
+        }
+    }
+
+    public function readAll()
+    {
+        try {
+            $sql = "SELECT * FROM categories";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during category reading: " . $e->getMessage();
         }
     }
 }
