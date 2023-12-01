@@ -33,6 +33,12 @@ class CategoryDAO
     //Read a category
     public function read($id)
     {
+        if ($id == null) {
+            throw new Exception("Id cannot be null");
+        }
+        if (!is_numeric($id)) {
+            throw new Exception("Id must be numeric");
+        }
         try {
             $sql = "SELECT * FROM categories WHERE id = :id";
             $stmt = $this->db->prepare($sql);
@@ -84,6 +90,7 @@ class CategoryDAO
         }
     }
 
+    //Read all categories
     public function readAll()
     {
         try {
@@ -137,12 +144,14 @@ class IngredientDAO
         try {
             $name = $ingredient->getName();
             $price = $ingredient->getPrice();
+            $image = $ingredient->getImage();
 
-            $sql = "INSERT INTO ingredients (name, price) VALUES (:name, :price)";
+            $sql = "INSERT INTO ingredients (name, price, image) VALUES (:name, :price, :image)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':image', $image);
             $stmt->execute();
 
             return true;
