@@ -8,11 +8,13 @@ require_once("DAO.php");
 require_once("src/Classes/recipe.php");
 require_once("src/Classes/ingredient.php");
 require_once("src/Classes/step.php");
+require_once("src/Classes/assocRecIngr.php");
 
 //Create DAO connexion
 $recipeDAO = new RecipeDAO($db);
 $ingredientDAO = new IngredientDAO($db);
 $stepsDAO = new StepsDAO($db);
+$assocRecIngrDAO = new AssocRecIngrDAO($db);
 
 //Message of form status
 $confirmationMessage = "";
@@ -76,9 +78,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Get the id of the recipe that has just been created
             $idRecipe = $recipeDAO->getLastId();
 
-
             // Get the values of the selected ingredients
+            $ingredients = $_POST['ingredients'];
 
+            $dataCount = count($ingredients);
+            $half = $dataCount / 2;
+
+            // Get the values of the quantities of the selected ingredients
+            $idsIngredients = array_slice($ingredients, 0, $half); // Get the first half of the array
+            $quantities = array_slice($ingredients, $half, $dataCount); // Get the second half of the array
+
+            // Create ingredients object with their quantities
+            for ($i = 0; $i < count($idsIngredients); $i++) {
+                $ingredientId = $idsIngredients[$i];
+                $quantity = $quantities[$i];
+
+                //Convert quantity to string if is a number
+                if (is_numeric($quantity)) {
+                    $quantity = strval($quantity);
+                }
+
+                //Create a new assocRecIngr object
+                $assocRecIngr = new AssocRecIngr("", $idRecipe, $ingredientId, $quantity);
+
+                print_r($assocRecIngr);
+
+                //Push the assocRecIngr in DB
+                $assocRecIngrDAO->create($assocRecIngr);
+            }
 
             // Get the steps from the form
             $steps = $_POST['etapePreparation'];

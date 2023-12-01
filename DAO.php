@@ -451,12 +451,14 @@ class AssocrecingrDAO
         try {
             $idRecipe = $assocrecingr->getIdRec();
             $idIngredient = $assocrecingr->getIdIngr();
+            $quantite = $assocrecingr->getQuantity();
 
-            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient) VALUES (:idRecipe, :idIngredient)";
+            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient, quantité) VALUES (:idRecipe, :idIngredient, :quantité)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':idRecipe', $idRecipe);
             $stmt->bindParam(':idIngredient', $idIngredient);
+            $stmt->bindParam(':quantité', $quantite);
             $stmt->execute();
 
             return true;

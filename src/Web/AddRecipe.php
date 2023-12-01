@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajout d'une recette</title>
     <link rel="stylesheet" href="../Style/AddRecipe.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
@@ -51,6 +50,21 @@ require_once("../../AddRecipeBack.php");
             <label for="ingredients">Liste des ingrédients nécessaires :</label>
             <select id="ingredients" name="ingredients[]" multiple required>
                 <script>
+                    // Fonction pour mettre à jour la liste des ingrédients sélectionnés
+                    function updateSelectedIngredientsList() {
+                        let selectedIngredients = $('#ingredients').val(); // Récupère les valeurs des options sélectionnées
+                        const divQuantities = $('#quantities');
+                        divQuantities.empty(); // Vide le contenu précédent
+
+                        if (selectedIngredients && selectedIngredients.length > 0) {
+                            selectedIngredients.forEach(function(ingredient) {
+                                newIngredient();
+                            });
+                        } else {
+                            divQuantities.text('Aucun ingrédient sélectionné');
+                        }
+                    }
+
                     // Appel AJAX pour obtenir les données des ingrédients
                     function getIngredients() {
                         let action = 'getIngredients';
@@ -63,7 +77,6 @@ require_once("../../AddRecipeBack.php");
                             },
                             async: true,
                             success: function(data) {
-                                console.log(data);
                                 addOptionsToSelect(data.ingredients); // Utiliser data.ingredients pour créer les options
                             },
                             error: function(xhr, textStatus, errorThrown) {
@@ -87,44 +100,35 @@ require_once("../../AddRecipeBack.php");
                             });
                             select.append(newOption);
                         });
+
+                        // Écoute les changements dans la sélection des ingrédients
+                        select.on('change', function() {
+                            updateSelectedIngredientsList(); // Appelle la fonction pour mettre à jour la liste des ingrédients sélectionnés
+                        });
                     }
 
                     // Appel de la fonction pour récupérer les données des ingrédients lors du chargement de la page
                     $(document).ready(function() {
-                        getIngredients();
+                        getIngredients(); // Appel initial pour récupérer les ingrédients
+
+                        // Événement de changement pour mettre à jour les quantités lorsque la sélection change
+                        $('#ingredients').on('change', function() {
+                            updateSelectedIngredientsList();
+                        });
                     });
                 </script>
             </select>
 
-            <script src="../../multi-select-tag.js"></script>
-
-            <script>
-                new MultiSelectTag('ingredients') // id of the select tag
-            </script>
-
-            <!-- Display chossen ingredients for quantity chose -->
-            <br>
-            <label for="quantite">Entrez les quantités pour chaque ingrédient :</label>
-            <?php
-            // Retrieve the selected ingredients in the form when user make a modification
-            foreach ($selectedIngredientsObject as $ingredient) { ?>
-                <div>
-                    <p>Nom: <?php echo $ingredient->getName(); ?></p>
-                    <label for="quantity_<?php echo $ingredient->getId(); ?>">Quantité:</label>
-                    <input type="number" id="quantity_<?php echo $ingredient->getId(); ?>" name="quantities[]" value="0">
-                    <input type="hidden" name="ingredient_ids[]" value="<?php echo $ingredient->getId(); ?>">
-                </div>
-                <hr>
-            <?php } ?>
-
+            <!-- Display quantities -->
+            <div id="quantities">
+            </div>
 
             <!-- Step -->
             <div id="etapes">
-                <!-- Ici seront ajoutés les champs d'input d'étapes de préparation -->
             </div>
+
+            <!-- Add a new step -->
             <button id="ajouterEtape">Ajouter une étape</button>
-
-
 
             <input type="submit" value="Ajouter la recette">
         </form>
@@ -189,4 +193,28 @@ require_once("../../AddRecipeBack.php");
             alert('Vous avez atteint le nombre maximum d\'étapes');
         }
     });
+
+    // Add new ingredient
+    function newIngredient() {
+        const divIngredients = document.getElementById('quantities');
+        divIngredients.innerHTML = ''; // Nettoyer le contenu précédent
+
+        const selectedOptions = $('#ingredients option:selected');
+
+        selectedOptions.each(function() {
+            const label = document.createElement('label');
+            label.for = $(this).val();
+            label.textContent = $(this).text();
+
+            const nouvelInput = document.createElement('input');
+            nouvelInput.type = 'text';
+            nouvelInput.name = 'ingredients[]'; // Utilisez un tableau si vous prévoyez de soumettre les données
+            nouvelInput.placeholder = 'Indiquer la quantité de ' + $(this).text() + ' (unité, ml ou g)';
+            nouvelInput.required = true;
+
+            divIngredients.appendChild(label);
+            divIngredients.appendChild(nouvelInput);
+            divIngredients.appendChild(document.createElement('br')); // Ajoute un saut de ligne pour séparer les étapes
+        });
+    }
 </script>
