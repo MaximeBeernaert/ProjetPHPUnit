@@ -7,12 +7,14 @@ class AssocRecIngr
     private $id;
     private $idRec;
     private $idIngr;
+    private $quantity;
 
-    public function __construct($id, $idRec, $idIngr)
+    public function __construct($id, $idRec, $idIngr, $quantity)
     {
         $this->id = $id;
         $this->idRec = $idRec;
         $this->idIngr = $idIngr;
+        $this->quantity = $quantity;
     }
 
     public function getId()
@@ -30,6 +32,11 @@ class AssocRecIngr
         return $this->idIngr;
     }
 
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -43,5 +50,10 @@ class AssocRecIngr
     public function setIdIngr($idIngr)
     {
         $this->idIngr = $idIngr;
+    }
+
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
     }
 }

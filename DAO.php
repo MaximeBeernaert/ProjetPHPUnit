@@ -115,7 +115,6 @@ class CategoryDAO
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
-
         } catch (Exception $e) {
             echo "Error during recipe reading: " . $e->getMessage();
         }
@@ -139,7 +138,7 @@ class IngredientDAO
             $name = $ingredient->getName();
             $price = $ingredient->getPrice();
 
-            $sql = "INSERT INTO ingredient (name, price) VALUES (:name, :price)";
+            $sql = "INSERT INTO ingredients (name, price) VALUES (:name, :price)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
@@ -156,7 +155,7 @@ class IngredientDAO
     public function read($id)
     {
         try {
-            $sql = "SELECT * FROM ingredient WHERE id = :id";
+            $sql = "SELECT * FROM ingredients WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
@@ -178,7 +177,7 @@ class IngredientDAO
             $name = $ingredient->getName();
             $price = $ingredient->getPrice();
 
-            $sql = "UPDATE ingredient SET name = :name, price = :price WHERE id = :id";
+            $sql = "UPDATE ingredients SET name = :name, price = :price WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
@@ -196,7 +195,7 @@ class IngredientDAO
     public function delete($id)
     {
         try {
-            $sql = "DELETE FROM ingredient WHERE id = :id";
+            $sql = "DELETE FROM ingredients WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
@@ -219,6 +218,23 @@ class IngredientDAO
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during ingredient reading: " . $e->getMessage();
+        }
+    }
+
+    //Read all ingredients
+    public function readAll()
+    {
+        try {
+            $sql = "SELECT * FROM ingredients";
+            $stmt = $this->db->prepare($sql);
+
             $stmt->execute();
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -347,7 +363,6 @@ class RecipeDAO
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
-
         } catch (Exception $e) {
             echo "Error during recipe reading: " . $e->getMessage();
         }
@@ -368,7 +383,23 @@ class RecipeDAO
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $result;
+        } catch (Exception $e) {
+            echo "Error during recipe reading: " . $e->getMessage();
+        }
+    }
 
+    //Get id of last recipe created
+    public function getLastId()
+    {
+        try {
+            $sql = "SELECT id FROM recipes ORDER BY id DESC LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result['id'];
         } catch (Exception $e) {
             echo "Error during recipe reading: " . $e->getMessage();
         }
@@ -500,12 +531,14 @@ class AssocrecingrDAO
         try {
             $idRecipe = $assocrecingr->getIdRec();
             $idIngredient = $assocrecingr->getIdIngr();
+            $quantite = $assocrecingr->getQuantity();
 
-            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient) VALUES (:idRecipe, :idIngredient)";
+            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient, quantité) VALUES (:idRecipe, :idIngredient, :quantité)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':idRecipe', $idRecipe);
             $stmt->bindParam(':idIngredient', $idIngredient);
+            $stmt->bindParam(':quantité', $quantite);
             $stmt->execute();
 
             return true;
