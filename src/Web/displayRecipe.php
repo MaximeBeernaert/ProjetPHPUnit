@@ -1,117 +1,161 @@
-<!DOCTYPE html>
-<html lang="fr">
+<DOCTYPE html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recette</title>
+    <title>Document</title>
     <link rel="stylesheet" href="../Style/displayRecipe.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
-<!-- DB call to retrive recipe, ingrediant and step -->
 <?php
-
-//Include DAO & connexion
-require_once("../../config.php");
-require_once("../../DAO.php");
-
-//Include class
-require_once("../Classes/recipe.php");
-require_once("../Classes/ingredient.php");
-require_once("../Classes/step.php");
-
-//Create DAO connexion
-$recipeDao = new RecipeDAO($db);
-$ingredientDao = new IngredientDAO($db);
-$stepsDao = new StepsDAO($db);
-
-//Retrive recipe id from URL
-$id = $_GET['recipeId']; //DEVONLY
-
-//Retrive recipe from id
-$recipe = $recipeDao->read($id);
-//Create recipe object
-$recipe = new Recipe($recipe["id"], $recipe["name"], $recipe["difficulty"], $recipe["description"], $recipe["time"], $recipe["image"], $recipe["idCategory"]);
-
-//Retrive ingredient from recipe id
-$ingredients = $ingredientDao->readByRecipeId($id);
-//For each ingredient, create an object
-foreach ($ingredients as $ingredient) {
-    $ingredient = new Ingredient($ingredient["id"], $ingredient["name"], $ingredient["price"], $ingredient["image"], $ingredient["quantity"]);
-}
-
-//Retrive steps from recipe id
-$steps = $stepsDao->readByRecipeId($id);
-//For each step, create an object
-foreach ($steps as $step) {
-    $step = new Step($step["id"], $step["idRecipe"], $step["number"], $step["description"]);
-}
-
+    require_once __DIR__ . '/../Web/Header.php';
 ?>
 
-<body>
-
-    <!-- Include Header -->
-    <?php include("header.php"); ?>
-
-    <!-- Display chooseen recipe -->
-    <div class="recipe-container">
-
-        <!-- Title of the recipe -->
-        <div class="recipe-title">
-            <?php echo $recipe->getName(); ?>
+<div class="recipemenu">
+    <div class="recipemenu-title">
+        <div class="recipemenu-title-text" id="recipemenu-title-text">
+            <!-- Title -->
         </div>
-
-        <!-- Recipe info -->
-        <div class="recipe-info">
-
-            <!-- Recipe IMG -->
-            <div class="recipe-info-img">
-                <img src="<?php echo $recipe->getImage(); ?>" alt="Image de la recette">
-            </div>
-
-            <!-- Recipe text : time todo, price etc -->
-            <div class="recipe-info-text">
-                <div class="recipe-info-text-time">
-                    <?php echo $recipe->getTime(); ?>
-                </div>
-                <div class="recipe-info-text-difficulty">
-                    <?php echo $recipe->getDifficulty(); ?>
-                </div>
-
-            </div>
-
+    </div>
+    <div class="recipemenu-image">
+        <div class="recipemenu-image-content" id="recipemenu-image-text">
+            <img class="recipemenu-image-content-img" id="recipemenu-image-content-img" src="" alt="">
         </div>
-
-        <!-- Recipe ingredients & step -->
-        <div class="recipe-doing">
-
-            <!-- Recipe ingredients -->
-            <div class="recipe-ingredients-list">
-                <?php
-                foreach ($ingredients as $ingredient) {
-                    echo '<div>';
-                    echo '<p><strong>Nom:</strong> ' . $ingredient['name'] . '</p>';
-                    echo '<p><strong>Prix:</strong> ' . $ingredient['price'] . ' €</p>';
-                    echo '<p><strong>Quantité:</strong> ' . $ingredient['quantity'] . '</p>';
-                    echo '<img src="' . $ingredient['image'] . '" alt="' . $ingredient['name'] . '">';
-                    echo '</div>';
-                }
-                ?>
+    </div>
+    <div class="recipemenu-info">
+        <div class="recipemenu-info-text" id="recipemenu-info-text">
+            <div class="recipemenu-info-text-difficulty" id="recipemenu-info-text-difficulty">
+                <!-- Difficulty -->
             </div>
-
-            <!-- Recipe steps -->
-            <div class="recipe-steps">
-                <?php
-                foreach ($steps as $step) {
-                    echo '<div>';
-                    echo '<p><strong>Etape ' . $step['number'] . ':</strong> ' . $step['description'] . '</p>';
-                    echo '</div>';
-                }
-                ?>
+            <div class="recipemenu-info-text-time" id="recipemenu-info-text-time">
+                <!-- Time -->
             </div>
-
         </div>
-</body>
+    </div>
+    <div class="recipemenu-ingredients">
+        <div class="recipemenu-ingredients-list" id="recipemenu-ingredients-list">
+            <!-- Ingredients -->
+        </div>
+    </div>
+    <div class="recipemenu-steps">
+        <div class="recipemenu-steps-list" id="recipemenu-steps-list">
+            <!-- Steps -->
+        </div>
+    </div>
+</div>
 
-</html>
+
+<script>
+    $(document).ready(function() {
+        const currentUrl = window.location.href;
+
+        // Get search term from URL
+        let params = (new URL(document.location)).searchParams;
+        getRecipe(params.get("recipeId"));
+        getIngredientsByRecipeId(params.get("recipeId"));
+        getStepsByRecipeId(params.get("recipeId"));
+    });
+
+    function getRecipe(recipeId) {
+        let recipe = recipeId;
+        // Do AJAX request when user types in search bar
+        $.ajax({
+            url: '../Back/DisplayRecipe.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                recipe
+            },
+            async:      true,
+            success: function(data) {
+                var recipe = data.recipe;
+                document.getElementById("recipemenu-title-text").innerHTML = recipe.name;
+                document.getElementById("recipemenu-image-content-img").src = recipe.image;
+                document.getElementById("recipemenu-image-content-img").alt = recipe.name;
+
+                document.getElementById("recipemenu-info-text-difficulty").innerHTML = "Difficulté : " + recipe.difficulty;
+                document.getElementById("recipemenu-info-text-time").innerHTML = "Temps : " + recipe.time;
+            }
+        });
+    }
+
+    function getIngredientsByRecipeId(recipeId) {
+        let ingredients = recipeId;
+        // Do AJAX request when user types in search bar
+        $.ajax({
+            url: '../Back/DisplayRecipe.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                ingredients
+            },
+            async:      true,
+            success: function(data) {            
+                
+                data.ingredients.forEach(ingredient => {
+                    const cardIngredient = document.createElement("div");
+                    cardIngredient.classList.add("recipemenu-ingredients-list-ingredient");
+
+                    const cardIngredientName = document.createElement("div");
+                    cardIngredientName.classList.add("recipemenu-ingredients-list-ingredient-name");
+
+                    const cardIngredientQuantity = document.createElement("div");
+                    cardIngredientQuantity.classList.add("recipemenu-ingredients-list-ingredient-quantity");
+
+
+                    cardIngredientName.innerHTML = ingredient.name;
+
+                    cardIngredientQuantity.innerHTML = ingredient.quantity;
+
+                    cardIngredient.appendChild(cardIngredientName);
+                    cardIngredient.appendChild(cardIngredientQuantity);
+                    
+                    document.getElementById("recipemenu-ingredients-list").appendChild(cardIngredient);
+                });
+                
+
+            }
+        });    
+    }
+
+    function getStepsByRecipeId(recipeId){
+        let steps = recipeId;
+        // Do AJAX request when user types in search bar
+        $.ajax({
+            url: '../Back/DisplayRecipe.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                steps
+            },
+            async:      true,
+            success: function(data) {            
+                
+                data.steps.forEach(step => {
+                    const cardstep = document.createElement("div");
+                    cardstep.classList.add("recipemenu-steps-list-step");
+
+                    const cardstepNumber = document.createElement("div");
+                    cardstepNumber.classList.add("recipemenu-steps-list-step-number");
+
+                    const cardstepDescription = document.createElement("div");
+                    cardstepDescription.classList.add("recipemenu-steps-list-step-description");
+
+
+                    cardstepNumber.innerHTML = step.number;
+
+                    cardstepDescription.innerHTML = step.description;
+
+                    cardstep.appendChild(cardstepNumber);
+                    cardstep.appendChild(cardstepDescription);
+                    
+                    document.getElementById("recipemenu-steps-list").appendChild(cardstep);
+                });
+
+            }
+        });    
+    
+    }
+</script>
