@@ -26,7 +26,7 @@ $ingredientDao = new IngredientDAO($db);
 $stepsDao = new StepsDAO($db);
 
 //Retrive recipe id from URL
-$id = 3; //DEVONLY
+$id = $_GET['recipeId']; //DEVONLY
 
 //Retrive recipe from id
 $recipe = $recipeDao->read($id);

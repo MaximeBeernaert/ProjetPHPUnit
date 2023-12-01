@@ -85,6 +85,10 @@
         const card = document.createElement("div");
         card.classList.add("searchmenu-results-result-container");
 
+        card.addEventListener("click", function (e) {
+            window.location.href = "/src/Web/displayRecipe.php?recipeId=" + recipe.id;
+        });
+
         const cardImage = document.createElement("div");
         cardImage.classList.add("searchmenu-results-result-container-image");
 
@@ -103,5 +107,8 @@
         card.appendChild(cardInfo);
 
         document.querySelector(".searchmenu-results").appendChild(card);
+
+        
+
     }
 </script>

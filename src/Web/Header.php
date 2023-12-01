@@ -19,8 +19,8 @@
                 <div class="header-main-categorylist-text">Categories</div>
             </div>
             <!-- LOGO (return to main menu) -->
-            <div class="header-main-logo">
-                <h3>Logo</h3>
+            <div id="header-main-logo" class="header-main-logo" onclick="window.location.href = '/src/Web/MainMenu.php'">
+                <div class="header-main-logo-text">Logo</div>
             </div>
         </div>
 
@@ -38,26 +38,26 @@
         </div>
 
         <!-- LOGIN -->
-        <div class="header-main-login">
-            <h3>Connexion</h3>
+        <div id="header-main-login" class="header-main-login" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+            <div class="header-main-login-text">Connexion</div>
         </div>
     </div>
 
     <!-- BOTTOM PART OF HEADER -->
     <div class="header-secondary">
         <div class="header-secondary-container">
-            <div class="header-secondary-container-news">
-                <h3>Actus</h3>
-
+            <div id="header-secondary-container-news" class="header-secondary-container-news" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+                <div class="header-secondary-container-news-text">Actus</div>
             </div>
-            <div class="header-secondary-container-fastrecipe">
-                <h3>Recettes très très rapides</h3>
 
+            <div id="header-secondary-container-fastrecipe" class="header-secondary-container-fastrecipe" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+                <div class="header-secondary-container-fastrecipe-text">Recettes très très rapides</div>
             </div>
-            <div class="header-secondary-container-bestrecipes">
-                <h3>Meilleures notes</h3>
 
+            <div id="header-secondary-container-bestrecipes" class="header-secondary-container-bestrecipes" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+                <div class="header-secondary-container-bestrecipes-text">Meilleures recettes</div>
             </div>
+
             <div class="header-secondary-container-seerecipes">
                 <h3>Gérer les recettes</h3>
             
