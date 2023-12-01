@@ -1,13 +1,13 @@
 <?php
 
 //Include DAO & connexion
-require_once("../../config.php");
-require_once("../../DAO.php");
+require_once("config.php");
+require_once("DAO.php");
 
 //Include class
-require_once("../Classes/recipe.php");
-require_once("../Classes/ingredient.php");
-require_once("../Classes/step.php");
+require_once("src/Classes/recipe.php");
+require_once("src/Classes/ingredient.php");
+require_once("src/Classes/step.php");
 
 //Create DAO connexion
 $recipeDAO = new RecipeDAO($db);
@@ -16,18 +16,6 @@ $stepsDAO = new StepsDAO($db);
 
 //Message of form status
 $confirmationMessage = "";
-
-//Retrieve all ingredients from the database
-$ingredients = $ingredientDAO->readAll();
-//Create ingredient object
-foreach ($ingredients as $ingredient) {
-    $id = $ingredient['id'];
-    $name = $ingredient['name'];
-    $price = $ingredient['price'];
-    $image = $ingredient['image'];
-
-    $ingredient = new Ingredient($id, $name, $price, $image, 0);
-}
 
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -124,30 +112,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+if (isset($_POST['action'])) {
+    $ingredientDAO = new IngredientDAO($db);
+    $ingredients = $ingredientDAO->readAll();
 
-$selectedIngredientsObject = [];
-// Vérifie si des données ont été envoyées via la méthode POST
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ingredients'])) {
-    // Get the values of the selected ingredients
-    $selectedIngredients = $_POST['ingredients'];
-
-    // Get ingredients from the database using their IDs
-    foreach ($selectedIngredients as $selectedIngredientId) {
-        // Retrieve the ingredient object by ID from the database
-        $ingredient = $ingredientDAO->read($selectedIngredientId);
-
-        // Create a new Ingredient object
-        $selectedIngredientObject = new Ingredient("", "", "", "", 0);
-
-        // Set the values of the Ingredient object
-        $selectedIngredientObject->setId($ingredient['id']);
-        $selectedIngredientObject->setName($ingredient['name']);
-        $selectedIngredientObject->setPrice($ingredient['price']);
-        $selectedIngredientObject->setImage($ingredient['image']);
-
-        // Push the ingredient in array
-        $selectedIngredientsObject[] = $selectedIngredientObject;
-    }
-
-    var_dump($selectedIngredientsObject);
+    echo json_encode(array('ingredients' => $ingredients));
 }
