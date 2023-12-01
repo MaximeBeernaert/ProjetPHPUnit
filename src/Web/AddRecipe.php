@@ -6,92 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajout d'une recette</title>
     <link rel="stylesheet" href="../Style/AddRecipe.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <?php
 
-//Include DAO & connexion
-require_once("../../config.php");
-require_once("../../DAO.php");
+//Inclure php 
+require_once("../../AddRecipeBack.php");
 
-//Include class
-require_once("../Classes/recipe.php");
-
-//Create DAO connexion
-$recipeDAO = new RecipeDAO($db);
-
-$confirmationMessage = "";
-
-// Check if the form has been submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if all required fields are filled
-    if (
-        !empty($_POST['nom_recette']) && !empty($_POST['difficulte']) && !empty($_POST['description'])
-        && !empty($_POST['temps_realisation']) && !empty($_POST['categorie'])
-    ) {
-        // Check if the format of the duration is valid
-        $tempsRealisation = $_POST['temps_realisation'];
-
-        if (preg_match('/(\d+)(h(\d+)min)?/', $tempsRealisation, $matches)) {
-            $heures = floor($matches[1]); // Partie entière des heures
-            $minutes = isset($matches[3]) ? floor($matches[3]) : 0; // Partie entière des minutes si elles existent, sinon 0
-
-            // Convertir les minutes en heures si elles dépassent 60
-            $heures += floor($minutes / 60);
-            $minutes = $minutes % 60;
-
-            // Formatage du temps au format SQL
-            $tempsFormatSQL = sprintf("%02d:%02d:00", $heures, $minutes);
-
-            //Format for category
-            $categorie = $_POST['categorie'];
-
-            switch ($categorie) {
-                case "entree":
-                    $categorie = 1;
-                    break;
-                case "plat":
-                    $categorie = 2;
-                    break;
-                case "dessert":
-                    $categorie = 3;
-                    break;
-            }
-
-            // Get the values from the form and store them in variables
-            $nomRecette = $_POST['nom_recette'];
-            $difficulte = $_POST['difficulte'];
-            $description = $_POST['description'];
-            $photoRecette = $_POST['photo_recette'];
-
-            // Create a new recipe object
-            $recipe = new Recipe("", "", "", "", "", "");
-
-            // Set the values of the recipe object
-            $recipe->setName($nomRecette);
-            $recipe->setDifficulty($difficulte);
-            $recipe->setDescription($description);
-            $recipe->setTime($tempsFormatSQL);
-            $recipe->setImage($photoRecette);
-            $recipe->setIdCategory($categorie);
-
-            // Call the create method from the DAO
-            $recipeDAO->create($recipe);
-
-            // Display a success message
-            $confirmationMessage = "La recette a été ajoutée avec succès !";
-            $confirmationClass = "success";
-        } else {
-            // Display an error message if the format of the duration is not valid
-            $confirmationMessage = "Le format de la durée de réalisation n'est pas valide";
-            $confirmationClass = "error";
-        }
-    } else {
-        // Display an error message if a required field is empty
-        $confirmationMessage = "Tous les champs doivent être remplis.";
-        $confirmationClass = "error";
-    }
-}
 ?>
 
 <body>
@@ -124,6 +48,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="dessert">Dessert</option>
             </select>
 
+            <!-- Display ingredients from DB -->
+            <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+
+            <label for="ingredients">Liste des ingrédients nécessaire :</label>
+            <select id="ingredients" name="ingredients[]" size="10" multiple required>
+                <?php foreach ($ingredients as $ingredient) { ?>
+                    <option value="<?php echo $ingredient['id']; ?>"><?php echo $ingredient['name']; ?></option>
+                <?php } ?>
+            </select>
+
+            <script>
+                new MultiSelectTag('ingredients') // id of the select tag
+            </script>
+
+            <!-- Display chossen ingredients for quantity chose -->
+            <label for="quantite">Entrez les quantités pour chaque ingrédient :</label>
+            <?php
+            // Retrieve the selected ingredients in the form when user make a modification
+            foreach ($selectedIngredientsObject as $ingredient) { ?>
+                <div>
+                    <p>Nom: <?php echo $ingredient->getName(); ?></p>
+                    <label for="quantity_<?php echo $ingredient->getId(); ?>">Quantité:</label>
+                    <input type="number" id="quantity_<?php echo $ingredient->getId(); ?>" name="quantities[]" value="0">
+                    <input type="hidden" name="ingredient_ids[]" value="<?php echo $ingredient->getId(); ?>">
+                </div>
+                <hr>
+            <?php } ?>
+
+
+            <!-- Step -->
+            <div id="etapes">
+                <!-- Ici seront ajoutés les champs d'input d'étapes de préparation -->
+            </div>
+            <button id="ajouterEtape">Ajouter une étape</button>
+
+
+
             <input type="submit" value="Ajouter la recette">
         </form>
         <div class="confirmation-message <?php echo $confirmationClass; ?> <?php echo !empty($confirmationMessage) ? 'show' : ''; ?>">
@@ -135,18 +96,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <script>
+    // Display confirmation message
     const confirmationMessage = document.querySelector('.confirmation-message');
-
     if (confirmationMessage) {
         if (confirmationMessage.classList.contains('show')) {
             setTimeout(() => {
                 confirmationMessage.classList.remove('show');
                 confirmationMessage.classList.add('hide');
-                // Animation de disparition après 5 secondes
+                // Animation
                 setTimeout(() => {
                     confirmationMessage.style.display = 'none';
                 }, 500);
             }, 5000);
         }
     }
+
+    // Display selected ingredients
+    $(document).ready(function() {
+        $('#ingredients').change(function() {
+            var selectedIngredients = $(this).val(); // Récupère les valeurs sélectionnées dans le select
+
+            $.ajax({
+                type: "POST",
+                url: "../../AddRecipeBack.php", // URL du script PHP pour le traitement
+                data: {
+                    ingredients: selectedIngredients
+                }, // Données à envoyer au serveur
+                success: function(response) {
+                    $('#selectedIngredients').html(response); // Affiche la réponse du serveur dans la div
+                }
+            });
+        });
+    });
+
+    //Add new step
+    let compteurEtapes = 1;
+    const maxEtapes = 10;
+
+    document.getElementById('ajouterEtape').addEventListener('click', function() {
+        if (compteurEtapes <= maxEtapes) {
+            const divEtapes = document.getElementById('etapes');
+            const label = document.createElement('label');
+            label.for = 'etapePreparation[]';
+            label.textContent = 'Étape n°' + compteurEtapes;
+            const nouvelInput = document.createElement('input');
+            nouvelInput.type = 'text';
+            nouvelInput.name = 'etapePreparation[]'; // Utilisez un tableau si vous prévoyez de soumettre les données
+            nouvelInput.placeholder = "Précisez l'étape " + compteurEtapes + " de la préparation";
+            nouvelInput.required = true;
+            divEtapes.appendChild(label);
+            divEtapes.appendChild(nouvelInput);
+
+            const boutonSupprimer = document.createElement('button');
+            boutonSupprimer.textContent = 'Supprimer';
+            boutonSupprimer.type = 'button';
+            boutonSupprimer.addEventListener('click', function() {
+                if (compteurEtapes > 1) {
+                    divEtapes.removeChild(label);
+                    divEtapes.removeChild(nouvelInput);
+                    divEtapes.removeChild(boutonSupprimer);
+                    divEtapes.removeChild(document.createElement('br')); // Supprime également le saut de ligne
+                    compteurEtapes--;
+                }
+            });
+            divEtapes.appendChild(boutonSupprimer);
+            divEtapes.appendChild(document.createElement('br')); // Ajoute un saut de ligne pour séparer les étapes
+            compteurEtapes++;
+        } else {
+            alert('Vous avez atteint le nombre maximum d\'étapes');
+        }
+    });
 </script>
