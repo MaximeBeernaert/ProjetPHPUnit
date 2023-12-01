@@ -40,8 +40,9 @@
         // Listener to search terms
         $('#searchInput').on('input', function() {
             var searchTerm = $(this).val();
-            if(searchTerm.length <= 0) {
-                return;
+            if(searchTerm.length < 1) {
+                document.getElementById("searchmenu-terms").innerHTML = 'Faites une recherche... ';
+                history.replaceState('', '', '/src/Web/Search.php?searchTerm=');
             }else{
                 history.replaceState('', '', '/src/Web/Search.php?searchTerm='+searchTerm+'');
                 searchTerms(searchTerm);
@@ -62,7 +63,9 @@
             async:      true,
             success: function(data) {
                 console.log(data.recipes);
-                document.getElementById("searchmenu-terms").innerHTML = searchTerm;
+                if(searchTerm.length > 0) {
+                    document.getElementById("searchmenu-terms").innerHTML = searchTerm;
+                }
                 
                 // Clear previous results
                 while (document.querySelector(".searchmenu-results").firstChild) {
