@@ -99,6 +99,27 @@ class CategoryDAO
             echo "Error during category reading: " . $e->getMessage();
         }
     }
+
+    public function getRecipesByCategory($name)
+    {
+        try {
+            $sql = "SELECT recipes.id, recipes.name, recipes.difficulty, recipes.description, recipes.time, recipes.image, recipes.date
+            FROM recipes
+            JOIN categories ON recipes.idCategory = categories.id
+            WHERE categories.name = :name;";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':name', $name);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } catch (Exception $e) {
+            echo "Error during recipe reading: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for ingredient table
