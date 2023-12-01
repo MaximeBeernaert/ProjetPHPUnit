@@ -315,6 +315,27 @@ class RecipeDAO
             echo "Error during recipe reading: " . $e->getMessage();
         }
     }
+
+    public function getRecipeById($id)
+    {
+        try {
+            $sql = "SELECT r.id AS id, r.name AS name, r.difficulty AS difficulty, r.description AS description, r.time AS time, r.idCategory AS idCategory, c.name AS categoryName, r.image AS image
+            FROM recipes r
+            JOIN categories c ON r.idCategory = c.id
+            WHERE r.id = :id";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } catch (Exception $e) {
+            echo "Error during recipe reading: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for step of recipe table
