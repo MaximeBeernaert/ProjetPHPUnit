@@ -1,14 +1,14 @@
 <?php
 
 //Include DAO & connexion
-require_once("config.php");
-require_once("DAO.php");
+require_once("../../config.php");
+require_once("../../DAO.php");
 
 //Include class
-require_once("src/Classes/recipe.php");
-require_once("src/Classes/ingredient.php");
-require_once("src/Classes/step.php");
-require_once("src/Classes/assocRecIngr.php");
+require_once("../Classes/recipe.php");
+require_once("../Classes/ingredient.php");
+require_once("../Classes/step.php");
+require_once("../Classes/assocRecIngr.php");
 
 //Create DAO connexion
 $recipeDAO = new RecipeDAO($db);

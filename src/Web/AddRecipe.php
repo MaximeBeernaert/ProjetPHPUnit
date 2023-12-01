@@ -11,8 +11,7 @@
 
 <?php
 
-//Inclure php 
-require_once("../../AddRecipeBack.php");
+require("../Back/AddRecipeBack.php");
 
 ?>
 
@@ -69,7 +68,7 @@ require_once("../../AddRecipeBack.php");
                     function getIngredients() {
                         let action = 'getIngredients';
                         $.ajax({
-                            url: '../../AddRecipeBack.php',
+                            url: '../Back/AddRecipeBack.php',
                             method: 'POST',
                             dataType: 'json',
                             data: {
