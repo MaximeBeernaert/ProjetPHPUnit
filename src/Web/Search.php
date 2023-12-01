@@ -59,10 +59,9 @@
             dataType: 'json',
             data: {
                 searchTerm
-            },        
+            },
             async:      true,
             success: function(data) {
-                console.log(data.recipes);
                 if(searchTerm.length > 0) {
                     document.getElementById("searchmenu-terms").innerHTML = searchTerm;
                 }

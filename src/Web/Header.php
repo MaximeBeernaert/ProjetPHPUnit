@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../Style/Header.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../Style/SearchBar.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <div class="header">
@@ -14,8 +15,9 @@
     <div class="header-main">
         <!-- CSS LIST OF CATEGORIES -->
         <div class="header-main-left">
-            <div class="header-main-categorylist">
-                <h3>Categories</h3>
+            <div class="header-main-categorylist" onclick="console.log('hey');">
+                <!-- <h3>Categories</h3> -->
+                Categories
             </div>
             <!-- LOGO (return to main menu) -->
             <div class="header-main-logo">
@@ -65,11 +67,10 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>   
 
 function searchTerms($terms, e) {
-    e.preventDefault();
     console.log('hey');
     if($terms.length >= 0) {
         console.log("/src/Web/Search.php?searchTerm=" + $terms);
@@ -79,4 +80,5 @@ function searchTerms($terms, e) {
         console.log("No terms");
     }
 }
+
 </script>
