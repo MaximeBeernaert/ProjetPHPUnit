@@ -279,8 +279,9 @@ class RecipeDAO
             $description = $recipe->getDescription();
             $time = $recipe->getTime();
             $idCategory = $recipe->getIdCategory();
+            $image = $recipe->getImage();
 
-            $sql = "INSERT INTO recipes (name, difficulty, description, time, idCategory) VALUES (:name, :difficulty, :description, :time, :idCategory)";
+            $sql = "INSERT INTO recipes (name, difficulty, description, time, idCategory, image) VALUES (:name, :difficulty, :description, :time, :idCategory, :image)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
@@ -288,6 +289,7 @@ class RecipeDAO
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':time', $time);
             $stmt->bindParam(':idCategory', $idCategory);
+            $stmt->bindParam(':image', $image);
             $stmt->execute();
 
             return true;
