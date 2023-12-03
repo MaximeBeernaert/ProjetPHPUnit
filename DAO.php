@@ -145,13 +145,15 @@ class IngredientDAO
             $name = $ingredient->getName();
             $price = $ingredient->getPrice();
             $image = $ingredient->getImage();
+            $quantity = $ingredient->getQuantity();
 
-            $sql = "INSERT INTO ingredients (name, price, image) VALUES (:name, :price, :image)";
+            $sql = "INSERT INTO ingredients (name, price, image, quantity) VALUES (:name, :price, :image)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':image', $image);
+            $stmt->bindParam(':quantity', $quantity);
             $stmt->execute();
 
             return true;
@@ -185,13 +187,15 @@ class IngredientDAO
             $id = $ingredient->getId();
             $name = $ingredient->getName();
             $price = $ingredient->getPrice();
+            $quantity = $ingredient->getQuantity();
 
-            $sql = "UPDATE ingredients SET name = :name, price = :price WHERE id = :id";
+            $sql = "UPDATE ingredients SET name = :name, price = :price, quantity = :quantity WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':quantity', $quantity);
             $stmt->execute();
 
             return true;
@@ -220,7 +224,7 @@ class IngredientDAO
     public function readByRecipeId($id)
     {
         try {
-            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price, i.image AS image, a.quantité AS quantity
+            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price, i.image AS image, a.quantitÃ© AS quantity
             FROM assocrecingr a
             JOIN ingredients i ON a.idIngredient = i.id
             WHERE a.idRecipe = :id";
@@ -542,12 +546,12 @@ class AssocrecingrDAO
             $idIngredient = $assocrecingr->getIdIngr();
             $quantite = $assocrecingr->getQuantity();
 
-            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient, quantité) VALUES (:idRecipe, :idIngredient, :quantité)";
+            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient, quantitÃ©) VALUES (:idRecipe, :idIngredient, :quantitÃ©)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':idRecipe', $idRecipe);
             $stmt->bindParam(':idIngredient', $idIngredient);
-            $stmt->bindParam(':quantité', $quantite);
+            $stmt->bindParam(':quantitÃ©', $quantite);
             $stmt->execute();
 
             return true;
