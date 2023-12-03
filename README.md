@@ -9,8 +9,10 @@ Ce projet est un exemple de configuration et d'utilisation de PHPUnit pour des t
 
 - Clonez le projet depuis Git, rendez-vous dans le répertoire du projet et exécutez la commande suivante :
 
-git clone <URL_du_projet_git>
-cd <nom_du_dossier_projet>
+``` bash
+git clone https://github.com/MaximeBeernaert/ProjetPHPUnit.git
+cd ProjetPHPUnit
+```
 
 
 ### Étape 2 : Installation de PHPUnit
@@ -20,7 +22,6 @@ cd <nom_du_dossier_projet>
 ```bash
 composer require --dev phpunit/phpunit
 ```
-
 
 
 ### Étape 3 : Configuration de la base de données
@@ -52,6 +53,7 @@ composer require --dev phpunit/phpunit
 ```
 
 - Remplacez `your_username` et `your_pw` par vos identifiants de base de données.
+
 
 ### Étape 5 : Exécution des tests avec PHPUnit
 
