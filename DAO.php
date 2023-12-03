@@ -368,19 +368,23 @@ class RecipeDAO
             WHERE r.name LIKE :term
             OR r.id IN (SELECT idRecipe FROM assocrecingr WHERE idIngredient IN (SELECT id FROM ingredients WHERE name LIKE :term ))
             OR r.idCategory IN (SELECT id FROM categories WHERE name LIKE :term )";
-            $stmt = $this->db->prepare($sql);
 
             $searchTerm = "%" . $searchTerm . "%";
+
+            $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':term', $searchTerm);
             $stmt->execute();
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
+            // Log or handle the error appropriately
             echo "Error during recipe reading: " . $e->getMessage();
+            return []; // Return an empty array or handle the error as needed
         }
     }
+
 
     public function getRecipeById($id)
     {
@@ -511,7 +515,7 @@ class StepsDAO
     }
 
     //Read steps by recipe id
-    public function readByRecipeId($id)
+    public function readStepsByRecipeId($id)
     {
         try {
             $sql = "SELECT * FROM steps WHERE idRecipe = :id";

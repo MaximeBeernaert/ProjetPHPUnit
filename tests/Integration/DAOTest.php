@@ -64,7 +64,7 @@ class DAOTest extends TestCase
               name TEXT,
               difficulty TEXT,
               description TEXT,
-              time INTEGER,
+              time TIME,
               image TEXT,
               idCategory INTEGER,
               date CURRENT_TIMESTAMP
@@ -623,5 +623,288 @@ class DAOTest extends TestCase
             $this->assertEquals($retrievedRecipe['image'], $recipe->getImage());
             $this->assertEquals($retrievedRecipe['date'], $recipe->getDate());
         }
+    }
+
+    //
+    //IngredientDAO tests
+    //
+
+    //readByRecipeId test
+    public function testReadByRecipeId(): void
+    {
+        // Create a new recipe with many ingredients
+        $recipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1, "");
+        $ingredient1 = new Ingredient(1, "name1", 1.0, "image1", "1kg");
+        $ingredient2 = new Ingredient(2, "name2", 2.0, "image2", "2kg");
+        $ingredient3 = new Ingredient(3, "name3", 3.0, "image3", "3kg");
+
+        //Link the ingredients to the recipe with assocrecingr
+        $assocrecingr1 = new Assocrecingr(1, $recipe->getId(), $ingredient1->getId(), "1kg");
+        $assocrecingr2 = new Assocrecingr(2, $recipe->getId(), $ingredient2->getId(), "2kg");
+        $assocrecingr3 = new Assocrecingr(3, $recipe->getId(), $ingredient3->getId(), "3kg");
+
+        //Push the recipe to the database
+        $this->recipes->create($recipe);
+
+        //Push the ingredients to the database
+        $this->ingredients->create($ingredient1);
+        $this->ingredients->create($ingredient2);
+        $this->ingredients->create($ingredient3);
+
+        //Push the assocrecingr to the database
+        $this->assocRecIngr->create($assocrecingr1);
+        $this->assocRecIngr->create($assocrecingr2);
+        $this->assocRecIngr->create($assocrecingr3);
+
+        //Try to read recipe by id
+        $result = $this->recipes->read($recipe->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+
+        //Assertion
+        $this->assertEquals($recipe->getId(), $result['id']);
+        $this->assertEquals($recipe->getName(), $result['name']);
+        $this->assertEquals($recipe->getDifficulty(), $result['difficulty']);
+        $this->assertEquals($recipe->getDescription(), $result['description']);
+        $this->assertEquals($recipe->getTime(), $result['time']);
+        $this->assertEquals($recipe->getImage(), $result['image']);
+        $this->assertEquals($recipe->getIdCategory(), $result['idCategory']);
+
+        //Try to read ingredients by recipe id
+        $result = $this->ingredients->readByRecipeId($recipe->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT i.id AS id, i.name AS name, i.price AS price, i.image AS image, a.quantité AS quantity
+        FROM assocrecingr a
+        JOIN ingredients i ON a.idIngredient = i.id
+        WHERE a.idRecipe = :id');
+        $stmt->execute(['id' => $recipe->getId()]);
+
+        //Assertion
+        $this->assertEquals($ingredient1->getId(), $result[0]['id']);
+        $this->assertEquals($ingredient1->getName(), $result[0]['name']);
+        $this->assertEquals($ingredient1->getPrice(), $result[0]['price']);
+        $this->assertEquals($ingredient1->getImage(), $result[0]['image']);
+        $this->assertEquals($ingredient1->getQuantity(), $result[0]['quantity']);
+
+        $this->assertEquals($ingredient2->getId(), $result[1]['id']);
+        $this->assertEquals($ingredient2->getName(), $result[1]['name']);
+        $this->assertEquals($ingredient2->getPrice(), $result[1]['price']);
+        $this->assertEquals($ingredient2->getImage(), $result[1]['image']);
+        $this->assertEquals($ingredient2->getQuantity(), $result[1]['quantity']);
+
+        $this->assertEquals($ingredient3->getId(), $result[2]['id']);
+        $this->assertEquals($ingredient3->getName(), $result[2]['name']);
+        $this->assertEquals($ingredient3->getPrice(), $result[2]['price']);
+        $this->assertEquals($ingredient3->getImage(), $result[2]['image']);
+        $this->assertEquals($ingredient3->getQuantity(), $result[2]['quantity']);
+    }
+
+    //readall test
+    public function testReadAll(): void
+    {
+        //Create a new ingredient
+        $ingredient = new Ingredient(1, "name", 1.0, "image", "1kg");
+
+        //Push the ingredient to the database
+        $this->ingredients->create($ingredient);
+
+        //Try to read ingredient by id
+        $result = $this->ingredients->read($ingredient->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM ingredients WHERE id = :id');
+
+        //Assertion
+        $this->assertEquals($ingredient->getId(), $result['id']);
+        $this->assertEquals($ingredient->getName(), $result['name']);
+        $this->assertEquals($ingredient->getPrice(), $result['price']);
+        $this->assertEquals($ingredient->getImage(), $result['image']);
+        $this->assertEquals($ingredient->getQuantity(), $result['quantity']);
+
+        $result = $this->ingredients->readAll();
+
+        $this->assertEquals($ingredient->getId(), $result[0]['id']);
+        $this->assertEquals($ingredient->getName(), $result[0]['name']);
+        $this->assertEquals($ingredient->getPrice(), $result[0]['price']);
+        $this->assertEquals($ingredient->getImage(), $result[0]['image']);
+        $this->assertEquals($ingredient->getQuantity(), $result[0]['quantity']);
+    }
+
+    //
+    //RecipeDAO tests
+    //
+
+    //Search test
+    // public function testSearch(): void
+    // {
+    //     //Create a new recipe
+    //     $recipe = new Recipe(1, "tarte aux pommes", "difficulty", "description", "01:00:00", "url", 1, "");
+
+    //     //Push the recipe to the database
+    //     $this->recipes->create($recipe);
+
+    //     //Try to read recipe by id
+    //     $result = $this->recipes->read($recipe->getId());
+
+    //     //Check if the read worked
+    //     $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+    //     $stmt->execute(['id' => $recipe->getId()]);
+
+    //     //Assertion
+    //     $this->assertEquals($recipe->getId(), $result['id']);
+    //     $this->assertEquals($recipe->getName(), $result['name']);
+    //     $this->assertEquals($recipe->getDifficulty(), $result['difficulty']);
+    //     $this->assertEquals($recipe->getDescription(), $result['description']);
+    //     $this->assertEquals($recipe->getTime(), $result['time']);
+    //     $this->assertEquals($recipe->getImage(), $result['image']);
+    //     $this->assertEquals($recipe->getIdCategory(), $result['idCategory']);
+
+    //     //Try to search recipe by name
+    //     $result = $this->recipes->search("tarte aux pommes");
+
+    //     print_r($result);
+
+    //     //Check if the read worked
+    //     $this->assertEquals($recipe->getId(), $result[0]['id']);
+    //     $this->assertEquals($recipe->getName(), $result[0]['name']);
+    //     $this->assertEquals($recipe->getDifficulty(), $result[0]['difficulty']);
+    //     $this->assertEquals($recipe->getDescription(), $result[0]['description']);
+    //     $this->assertEquals($recipe->getTime(), $result[0]['time']);
+    //     $this->assertEquals($recipe->getImage(), $result[0]['image']);
+    //     $this->assertEquals($recipe->getIdCategory(), $result[0]['idCategory']);
+    // }
+
+    //recipeById test
+    public function testGetRecipeById(): void
+    {
+        // Create a new recipe
+        $recipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1, "");
+
+        // Push the recipe to the database
+        $this->recipes->create($recipe);
+
+        // Try to read recipe by id
+        $result = $this->recipes->read($recipe->getId());
+
+        // Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+        $stmt->execute(['id' => $recipe->getId()]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Assertion
+        $this->assertEquals($recipe->getId(), $result['id']);
+        $this->assertEquals($recipe->getName(), $result['name']);
+        $this->assertEquals($recipe->getDifficulty(), $result['difficulty']);
+        $this->assertEquals($recipe->getDescription(), $result['description']);
+        $this->assertEquals($recipe->getTime(), $result['time']);
+        $this->assertEquals($recipe->getImage(), $result['image']);
+        $this->assertEquals($recipe->getIdCategory(), $result['idCategory']);
+    }
+
+    //getLastId test
+    public function testGetLastId(): void
+    {
+        // Create a new recipe
+        $recipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1, "");
+
+        // Push the recipe to the database
+        $this->recipes->create($recipe);
+
+        // Try to read recipe by id
+        $result = $this->recipes->read($recipe->getId());
+
+        // Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+        $stmt->execute(['id' => $recipe->getId()]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Assertion
+        $this->assertEquals($recipe->getId(), $result['id']);
+        $this->assertEquals($recipe->getName(), $result['name']);
+        $this->assertEquals($recipe->getDifficulty(), $result['difficulty']);
+        $this->assertEquals($recipe->getDescription(), $result['description']);
+        $this->assertEquals($recipe->getTime(), $result['time']);
+        $this->assertEquals($recipe->getImage(), $result['image']);
+        $this->assertEquals($recipe->getIdCategory(), $result['idCategory']);
+
+        // Get the last id
+        $lastId = $this->recipes->getLastId();
+
+        // Assertion
+        $this->assertEquals($recipe->getId(), $lastId);
+    }
+
+    //
+    //StepsDAO tests
+    //
+
+    //readByRecipeId test
+    public function readStepsByRecipeId(): void
+    {
+        // Create a new recipe with many steps
+        $recipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1, "");
+        $step1 = new Step(1, $recipe->getId(), 1, "test1");
+        $step2 = new Step(2, $recipe->getId(), 2, "test2");
+        $step3 = new Step(3, $recipe->getId(), 3, "test3");
+
+        // Push the recipe to the database
+        $this->recipes->create($recipe);
+
+        // Push the steps to the database
+        $this->steps->create($step1);
+        $this->steps->create($step2);
+        $this->steps->create($step3);
+
+        // Link the steps to the recipe with assocrecingr
+        $assocrecingr1 = new Assocrecingr(1, $recipe->getId(), $step1->getId(), "1kg");
+        $assocrecingr2 = new Assocrecingr(2, $recipe->getId(), $step2->getId(), "2kg");
+        $assocrecingr3 = new Assocrecingr(3, $recipe->getId(), $step3->getId(), "3kg");
+
+        // Push the assocrecingr to the database
+        $this->assocRecIngr->create($assocrecingr1);
+        $this->assocRecIngr->create($assocrecingr2);
+        $this->assocRecIngr->create($assocrecingr3);
+
+        // Try to read recipe by id
+        $result = $this->recipes->read($recipe->getId());
+
+        // Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+        $stmt->execute(['id' => $recipe->getId()]);
+
+        // Assertion
+        $this->assertEquals($recipe->getId(), $result['id']);
+        $this->assertEquals($recipe->getName(), $result['name']);
+        $this->assertEquals($recipe->getDifficulty(), $result['difficulty']);
+        $this->assertEquals($recipe->getDescription(), $result['description']);
+        $this->assertEquals($recipe->getTime(), $result['time']);
+        $this->assertEquals($recipe->getImage(), $result['image']);
+        $this->assertEquals($recipe->getIdCategory(), $result['idCategory']);
+
+        // Try to read steps by recipe id
+        $result = $this->steps->readByRecipeId($recipe->getId());
+
+        // Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT s.id AS id, s.number AS number, s.description AS description
+        FROM assocrecingr a
+        JOIN steps s ON a.idIngredient = s.id
+        WHERE a.idRecipe = :id');
+        $stmt->execute(['id' => $recipe->getId()]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Assertion
+        $this->assertEquals($step1->getId(), $result[0]['id']);
+        $this->assertEquals($step1->getNumber(), $result[0]['number']);
+        $this->assertEquals($step1->getDescription(), $result[0]['description']);
+
+        $this->assertEquals($step2->getId(), $result[1]['id']);
+        $this->assertEquals($step2->getNumber(), $result[1]['number']);
+        $this->assertEquals($step2->getDescription(), $result[1]['description']);
+
+        $this->assertEquals($step3->getId(), $result[2]['id']);
+        $this->assertEquals($step3->getNumber(), $result[2]['number']);
+        $this->assertEquals($step3->getDescription(), $result[2]['description']);
     }
 }
