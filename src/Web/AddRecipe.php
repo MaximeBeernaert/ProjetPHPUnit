@@ -8,7 +8,7 @@
     <?php
     define('INCLUDED', true);
     require_once('Header.php');
-    require("../Back/AddRecipeBack.php");
+    require("../Back/AddRecipe.php");
     ?>
     <link rel="stylesheet" href="../Style/AddRecipe.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -40,7 +40,7 @@
             </select>
 
             <!-- Display ingredients from DB -->
-            
+
             <div class="addrecipe-container-ingredients">
                 <div class="addrecipe-container-ingredients-list" id="addrecipe-container-ingredients-list">
                     <!-- Will be filled by the button and function -->
@@ -149,8 +149,7 @@
         });
     });
 
-    function addIngredient()
-    {
+    function addIngredient() {
         const container = document.getElementById("addrecipe-container-ingredients-list");
 
         const ingredient = document.createElement("div");
