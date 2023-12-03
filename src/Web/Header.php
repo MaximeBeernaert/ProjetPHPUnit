@@ -26,7 +26,7 @@ if (!defined('INCLUDED')) {
             </div>
             <!-- LOGO (return to main menu) -->
             <div id="header-main-logo" class="header-main-logo" onclick="window.location.href = '/src/Web/MainMenu.php'">
-                <div class="header-main-logo-text">Logo</div>
+                <img src="../Images/Logo.png" alt="Logo" class="header-main-logo-img">
             </div>
         </div>
 
