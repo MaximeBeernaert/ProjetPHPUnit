@@ -10,6 +10,7 @@ if (isset($_POST["searchTerm"])) {
     $recipeDao = new RecipeDAO($db);
     $recipes = $recipeDao->search($searchTerm);
 
-    echo json_encode(array('recipes' =>($recipes)));
+    echo json_encode(array('recipes' => ($recipes)));
 }
+
 ?>

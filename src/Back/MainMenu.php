@@ -8,10 +8,11 @@ if (isset($_POST["arrayRecipes"])) {
     $arrayRecipes = $_POST["arrayRecipes"];
 
     $recipeDao = new RecipeDAO($db);
-    foreach($arrayRecipes as $key => $value){
+    foreach ($arrayRecipes as $key => $value) {
         $recipe = $recipeDao->getRecipeById($value);
         $arrayRecipes[$key] = $recipe;
     }
-    echo json_encode(array('arrayRecipes' =>($arrayRecipes)));
+    echo json_encode(array('arrayRecipes' => ($arrayRecipes)));
 }
+
 ?>

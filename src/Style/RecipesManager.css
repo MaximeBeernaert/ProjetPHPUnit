@@ -1,0 +1,49 @@
+.managermenu{
+    margin : 2em 16em;
+    padding: 1em 1em;
+    min-height: 40em;
+    background-color: beige;
+    border-radius: 1em;
+}
+
+.managermenu-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.managermenu-list-recipe-container{
+    margin: 2em 1em;
+    width: 16em;
+    height: 20em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.managermenu-list-recipe-container-image{
+    width: 10em;
+    height: 10em;
+    background-color: white;
+    border-radius: 1em;
+}
+
+.managermenu-list-recipe-container-image-img{
+    width: 10em;
+    height: 10em;
+    background-color: white;
+    border-radius: 1em;
+}
+
+.managermenu-list-recipe-container-title{
+    margin: 0.5em 0.5em;
+    font-size: 1.5em;
+}
+
+.managermenu-list-recipe-container-options{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 0.5em 0.5em;
+}

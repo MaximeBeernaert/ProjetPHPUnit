@@ -1,3 +1,9 @@
+<?php
+if (!defined('INCLUDED')) {
+    header('Location: AccessDenied.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 
 <head>
@@ -15,12 +21,12 @@
     <div class="header-main">
         <!-- CSS LIST OF CATEGORIES -->
         <div class="header-main-left">
-            <div id="header-main-categorylist" class="header-main-categorylist" onclick="showCategories()">
+            <div id="header-main-categorylist" class="header-main-categorylist clickable" onclick="showCategories()">
                 <div class="header-main-categorylist-text">Categories</div>
             </div>
             <!-- LOGO (return to main menu) -->
-            <div class="header-main-logo">
-                <h3>Logo</h3>
+            <div id="header-main-logo" class="header-main-logo clickable" onclick="window.location.href = '/src/Web/MainMenu.php'">
+                <img src="../Images/Logo.png" alt="Logo" class="header-main-logo-img">
             </div>
         </div>
 
@@ -38,94 +44,91 @@
         </div>
 
         <!-- LOGIN -->
-        <div class="header-main-login">
-            <h3>Connexion</h3>
+        <div id="header-main-login" class="header-main-login clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+            <div class="header-main-login-text">Connexion</div>
         </div>
     </div>
 
     <!-- BOTTOM PART OF HEADER -->
     <div class="header-secondary">
         <div class="header-secondary-container">
-            <div class="header-secondary-container-news">
-                <h3>Actus</h3>
-
+            <div id="header-secondary-container-news" class="header-secondary-container-news clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+                <div class="header-secondary-container-news-text">Actus</div>
             </div>
-            <div class="header-secondary-container-fastrecipe">
-                <h3>Recettes très très rapides</h3>
 
+            <div id="header-secondary-container-fastrecipe" class="header-secondary-container-fastrecipe clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+                <div class="header-secondary-container-fastrecipe-text">Recettes très très rapides</div>
             </div>
-            <div class="header-secondary-container-bestrecipes">
-                <h3>Meilleures notes</h3>
 
+            <div id="header-secondary-container-bestrecipes" class="header-secondary-container-bestrecipes clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+                <div class="header-secondary-container-bestrecipes-text">Meilleures recettes</div>
             </div>
-            <div class="header-secondary-container-seerecipes">
+
+            <div class="header-secondary-container-seerecipes clickable" onclick="window.location.href = '/src/Web/RecipesManager.php'">
                 <h3>Gérer les recettes</h3>
-            
+
             </div>
         </div>
     </div>
 </div>
 
 
-<script>   
-
-
-
-$(document).ready(function() {
-    document.addEventListener("click", function (e) {
-        var c = document.getElementById('categories-result-container');
-        if(c) { c.remove();};
+<script>
+    $(document).ready(function() {
+        document.addEventListener("click", function(e) {
+            var c = document.getElementById('categories-result-container');
+            if (c) {
+                c.remove();
+            };
+        });
     });
-});
 
-// Listener to search terms, send user to search page
-function searchTerms($terms, e) {
-    if($terms.length >= 0) {
-        console.log("/src/Web/Search.php?searchTerm=" + $terms);
-        window.location.href = "/src/Web/Search.php?searchTerm=" + $terms; 
+    // Listener to search terms, send user to search page
+    function searchTerms($terms, e) {
+        if ($terms.length >= 0) {
+            console.log("/src/Web/Search.php?searchTerm=" + $terms);
+            window.location.href = "/src/Web/Search.php?searchTerm=" + $terms;
 
-    }else{
-        console.log("No terms");
-    }
-}
-
-// show a list of categories to be forwarded to
-function showCategories(){
-    var categories='categories';
-    $.ajax({
-        url: '../Back/Header.php',
-        method: 'POST',
-        dataType: 'json',
-        data: {
-            categories
-        },
-        async:      true,
-        success: function(data) {
-            console.log(data.categories);
-
-            const listContainer = document.createElement("div");
-            listContainer.classList.add("categories-result-container");
-            listContainer.setAttribute("id", "categories-result-container");
-
-            const list = document.createElement("div");
-            list.classList.add("categories-result-container-list");
-
-            data.categories.forEach(category => {
-                const listItem = document.createElement("div");
-                listItem.classList.add("categories-result-container-list-item");
-                listItem.setAttribute("onclick", "window.location.href = '/src/Web/Category.php?category=" + category.name + "';");
-                listItem.innerHTML = category.name;
-                list.appendChild(listItem);
-            });
-
-            listContainer.appendChild(list);
-            document.getElementById("header-main-categorylist").appendChild(listContainer);
-
+        } else {
+            console.log("No terms");
         }
-    });
+    }
+
+    // show a list of categories to be forwarded to
+    function showCategories() {
+        var categories = 'categories';
+        $.ajax({
+            url: '../Back/Header.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                categories
+            },
+            async: true,
+            success: function(data) {
+                console.log(data.categories);
+
+                const listContainer = document.createElement("div");
+                listContainer.classList.add("categories-result-container");
+                listContainer.setAttribute("id", "categories-result-container");
+
+                const list = document.createElement("div");
+                list.classList.add("categories-result-container-list");
+
+                data.categories.forEach(category => {
+                    const listItem = document.createElement("div");
+                    listItem.classList.add("categories-result-container-list-item");
+                    listItem.setAttribute("onclick", "window.location.href = '/src/Web/Category.php?category=" + category.name + "';");
+                    listItem.innerHTML = category.name;
+                    list.appendChild(listItem);
+                });
+
+                listContainer.appendChild(list);
+                document.getElementById("header-main-categorylist").appendChild(listContainer);
+
+            }
+        });
 
 
-}
-
-
+    }
 </script>

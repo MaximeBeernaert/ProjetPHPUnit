@@ -2,7 +2,7 @@
 
 // This class aims to create a step for a recipe
 
-class Step 
+class Step
 {
     private $id;
     private $idRecipe;
@@ -32,12 +32,12 @@ class Step
         return $this->number;
     }
 
-    public function getDescription() 
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setId($id) 
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -47,15 +47,13 @@ class Step
         $this->idRecipe = $idRecipe;
     }
 
-    public function setNumber($number) 
+    public function setNumber($number)
     {
         $this->number = $number;
     }
 
-    public function setDescription($description) 
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 }
-
-?>

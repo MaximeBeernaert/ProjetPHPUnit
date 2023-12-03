@@ -11,8 +11,9 @@ class Recipe
     private $time;
     private $image;
     private $idCategory;
+    private $date;
 
-    public function __construct($id, $name, $difficulty, $description, $time, $idCategory)
+    public function __construct($id, $name, $difficulty, $description, $time, $idCategory, $date)
     {
         $this->id = $id;
         $this->name = $name;
@@ -20,6 +21,7 @@ class Recipe
         $this->description = $description;
         $this->time = $time;
         $this->idCategory = $idCategory;
+        $this->date = $date;
     }
 
     public function getId()
@@ -27,7 +29,7 @@ class Recipe
         return $this->id;
     }
 
-    public function getName() 
+    public function getName()
     {
         return $this->name;
     }
@@ -47,7 +49,7 @@ class Recipe
         return $this->time;
     }
 
-    public function getImage() 
+    public function getImage()
     {
         return $this->image;
     }
@@ -57,32 +59,37 @@ class Recipe
         return $this->idCategory;
     }
 
-    public function setId($id) 
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function setId($id)
     {
         $this->id = $id;
     }
 
-    public function setName($name) 
+    public function setName($name)
     {
         $this->name = $name;
     }
 
-    public function setDifficulty($difficulty) 
+    public function setDifficulty($difficulty)
     {
         $this->difficulty = $difficulty;
     }
 
-    public function setDescription($description) 
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    public function setTime($time) 
+    public function setTime($time)
     {
         $this->time = $time;
     }
 
-    public function setImage($image) 
+    public function setImage($image)
     {
         $this->image = $image;
     }
@@ -91,6 +98,9 @@ class Recipe
     {
         $this->idCategory = $idCategory;
     }
-}
 
-?>
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+}

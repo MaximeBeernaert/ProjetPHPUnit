@@ -1,7 +1,19 @@
+.clickable{
+    cursor: pointer;
+}
+.clickable:hover{
+    /* color: #e6e6e6; */
+    background-color: bisque;
+    border-radius: 1em;
+}
+
 .header{
     position: sticky;
     top: 0;
     z-index: 999;
+}
+.header-main-left{
+    width:500px;
 }
 .header-main, .header-secondary, .header-main-left{
     display: flex;
@@ -43,7 +55,22 @@
 .header-secondary-container{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 50em;
+}
+
+.header-secondary-container-news{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-secondary-container-bestrecipes, .header-secondary-container-fastrecipe, .header-secondary-container-news{
+    height : 3em;
+    width: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* CATEGORY CONTAINER */
@@ -51,16 +78,11 @@
     position: absolute;
     top: 40%; 
     left: 1.5%; 
-    /* transform: translate(-50%, -50%);  */
     padding: 10px 20px; 
     width: 80px;
-    /* min-height: 100px; */
     background-color: #e6e6e6;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* justify-content: space-between; */
 }
 .categories-result-container-list-item{
     margin: 0.5em 0 ;
 }
+
