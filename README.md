@@ -66,3 +66,6 @@ composer require --dev phpunit/phpunit
 ./vendor/bin/phpunit
 ```
 
+### Étape 6 : Excécution du projet en local
+
+- Utilisez votre serveur local (XAMPP, MAMP, WAMP...) pour exécuter le projet, pensez à changer le chemin d'accès ou a déposer le projet dans le dossier de votre serveur local.
