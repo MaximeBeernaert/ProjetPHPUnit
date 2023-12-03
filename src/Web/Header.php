@@ -1,3 +1,9 @@
+<?php
+if (!defined('INCLUDED')) {
+    header('Location: AccessDenied.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 
 <head>
