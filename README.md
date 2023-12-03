@@ -29,7 +29,7 @@ composer require --dev phpunit/phpunit
 
 ### Étape 3 : Configuration de la base de données
 
-- Exécutez les scripts `DB-PHPUNIT.sql` et `inserts.sql` pour configurer la base de données avec les données nécessaires.
+- Exécutez le script `DB-PHPUNIT.sql` pour configurer la base de données avec les données nécessaires.
 
 
 ### Étape 4 : Configuration de phpunit.xml
