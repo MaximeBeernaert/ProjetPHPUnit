@@ -66,7 +66,7 @@
             cardImage.classList.add("categorymenu-results-result-container-image");
 
             const cardImageImg = document.createElement("img");
-            // cardImageImg.src = recipe.image;
+            cardImageImg.src = recipe.image;
             cardImageImg.alt = recipe.name;
             cardImage.classList.add("categorymenu-results-result-container-image-img");
 
