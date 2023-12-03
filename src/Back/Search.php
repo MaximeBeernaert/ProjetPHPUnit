@@ -12,3 +12,5 @@ if (isset($_POST["searchTerm"])) {
 
     echo json_encode(array('recipes' => ($recipes)));
 }
+
+?>
