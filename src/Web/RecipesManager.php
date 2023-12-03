@@ -53,13 +53,13 @@
             const card = document.createElement("div");
             card.classList.add("managermenu-list-recipe-container");
 
-            
+
 
             const cardImage = document.createElement("div");
             cardImage.classList.add("managermenu-list-recipe-container-image");
 
             const cardImageImg = document.createElement("img");
-            // cardImageImg.src = recipe.image;
+            cardImageImg.src = recipe.image;
             cardImageImg.alt = recipe.name;
             cardImage.classList.add("managermenu-list-recipe-container-image-img");
             cardImage.addEventListener("click", function(e) {
