@@ -118,7 +118,8 @@
 .mainmenu-recipeoftheday-container-recipe{
     display: flex;
     width: 100%;
-    margin:2em 10px;
+    min-height: 12em;
+    /* margin:2em 10px; */
 }
 
 .mainmenu-recipeoftheday-container-recipe-image img{
