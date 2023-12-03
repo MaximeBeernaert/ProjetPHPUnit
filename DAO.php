@@ -148,13 +148,12 @@ class IngredientDAO
             $image = $ingredient->getImage();
             $quantity = $ingredient->getQuantity();
 
-            $sql = "INSERT INTO ingredients (name, price, image, quantity) VALUES (:name, :price, :image, :quantity)";
+            $sql = "INSERT INTO ingredients (name, price, image, quantity) VALUES (:name, :price, :image)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':image', $image);
-            $stmt->bindParam(':quantity', $quantity);
             $stmt->execute();
 
             return true;
