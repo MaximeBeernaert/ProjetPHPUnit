@@ -29,17 +29,26 @@
             <div class="recipemenu-info-text-difficulty" id="recipemenu-info-text-difficulty">
                 <!-- Difficulty -->
             </div>
+            <div class="recipemenu-info-text-slash" id="recipemenu-info-text-slash">
+                -
+            </div>
             <div class="recipemenu-info-text-time" id="recipemenu-info-text-time">
                 <!-- Time -->
             </div>
         </div>
     </div>
     <div class="recipemenu-ingredients">
+        <div class="recipemenu-ingredients-title" id="recipemenu-ingredients-title">
+            Ingredients
+        </div>
         <div class="recipemenu-ingredients-list" id="recipemenu-ingredients-list">
             <!-- Ingredients -->
         </div>
     </div>
     <div class="recipemenu-steps">
+        <div class="recipemenu-steps-title" id="recipemenu-steps-title">
+            Etapes
+        </div>
         <div class="recipemenu-steps-list" id="recipemenu-steps-list">
             <!-- Steps -->
         </div>
@@ -104,10 +113,22 @@
                     const cardIngredientQuantity = document.createElement("div");
                     cardIngredientQuantity.classList.add("recipemenu-ingredients-list-ingredient-quantity");
 
+                    const cardIngredientImage = document.createElement("div");
+                    cardIngredientImage.classList.add("recipemenu-ingredients-list-ingredient-image");
+
+                    const cardIngredientImageImg = document.createElement("img");
+                    cardIngredientImageImg.classList.add("recipemenu-ingredients-list-ingredient-image-img");
 
                     cardIngredientName.innerHTML = ingredient.name;
 
                     cardIngredientQuantity.innerHTML = ingredient.quantity;
+
+                    cardIngredientImageImg.src = ingredient.image;
+                    cardIngredientImageImg.alt = ingredient.name;
+
+                    cardIngredientImage.appendChild(cardIngredientImageImg);
+
+                    cardIngredient.appendChild(cardIngredientImage);
 
                     cardIngredient.appendChild(cardIngredientName);
                     cardIngredient.appendChild(cardIngredientQuantity);
@@ -143,12 +164,18 @@
                     const cardstepDescription = document.createElement("div");
                     cardstepDescription.classList.add("recipemenu-steps-list-step-description");
 
+                    const cardstepSlash = document.createElement("div");
+                    cardstepSlash.classList.add("recipemenu-steps-list-step-slash");
 
                     cardstepNumber.innerHTML = step.number;
 
                     cardstepDescription.innerHTML = step.description;
 
+                    cardstepSlash.innerHTML = "-";
+
+                    
                     cardstep.appendChild(cardstepNumber);
+                    cardstep.appendChild(cardstepSlash);
                     cardstep.appendChild(cardstepDescription);
                     
                     document.getElementById("recipemenu-steps-list").appendChild(cardstep);
