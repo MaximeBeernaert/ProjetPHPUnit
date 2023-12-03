@@ -215,22 +215,95 @@ class DAOTest extends TestCase
         $this->assertEquals($newAssocRecIngr->getQuantity(), $result['quantité']);
     }
 
+    public function testCreateCategories(): void
+    {
+        //Create a new category
+        $newCategory = new Category(1, "name", "image");
 
-    // public function testCreateCategories(Category $category): void
-    // {
-    // }
+        //Push the category to the database
+        $this->categories->create($newCategory);
 
-    // public function testCreateIngredients(Ingredient $ingredient): void
-    // {
-    // }
+        //Try to read category by id
+        $result = $this->categories->read($newCategory->getId());
 
-    // public function testCreateRecipes(Recipe $recipe): void
-    // {
-    // }
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM categories WHERE id = :id');
+        $stmt->execute(['id' => $newCategory->getId()]);
 
-    // public function testCreateSteps(Step $step): void
-    // {
-    // }
+        //Assertion
+        $this->assertEquals($newCategory->getId(), $result['id']);
+        $this->assertEquals($newCategory->getName(), $result['name']);
+        $this->assertEquals($newCategory->getImage(), $result['image']);
+    }
+
+    public function testCreateIngredients(): void
+    {
+        //Create a new ingredient
+        $newIngredient = new Ingredient(1, "name", 1.0, "image", "1kg");
+
+        //Push the ingredient to the database
+        $this->ingredients->create($newIngredient);
+
+        //Try to read ingredient by id
+        $result = $this->ingredients->read($newIngredient->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM ingredients WHERE id = :id');
+
+        //Assertion
+        $this->assertEquals($newIngredient->getId(), $result['id']);
+        $this->assertEquals($newIngredient->getName(), $result['name']);
+        $this->assertEquals($newIngredient->getPrice(), $result['price']);
+        $this->assertEquals($newIngredient->getImage(), $result['image']);
+        $this->assertEquals($newIngredient->getQuantity(), $result['quantity']);
+    }
+
+    public function testCreateRecipes(): void
+    {
+        //Create a new recipe
+        $newRecipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1);
+
+        //Push the recipe to the database
+        $this->recipes->create($newRecipe);
+
+        //Try to read recipe by id
+        $result = $this->recipes->read($newRecipe->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+        $stmt->execute(['id' => $newRecipe->getId()]);
+
+        //Assertion
+        $this->assertEquals($newRecipe->getId(), $result['id']);
+        $this->assertEquals($newRecipe->getName(), $result['name']);
+        $this->assertEquals($newRecipe->getDifficulty(), $result['difficulty']);
+        $this->assertEquals($newRecipe->getDescription(), $result['description']);
+        $this->assertEquals($newRecipe->getTime(), $result['time']);
+        $this->assertEquals($newRecipe->getImage(), $result['image']);
+        $this->assertEquals($newRecipe->getIdCategory(), $result['idCategory']);
+    }
+
+    public function testCreateSteps(): void
+    {
+        //Create a new step
+        $newStep = new Step(1, 1, 1, "test");
+
+        //Push the step to the database
+        $this->steps->create($newStep);
+
+        //Try to read step by id
+        $result = $this->steps->read($newStep->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM steps WHERE id = :id');
+        $stmt->execute(['id' => $newStep->getId()]);
+
+        //Assertion
+        $this->assertEquals($newStep->getId(), $result['id']);
+        $this->assertEquals($newStep->getIdRecipe(), $result['idRecipe']);
+        $this->assertEquals($newStep->getNumber(), $result['number']);
+        $this->assertEquals($newStep->getDescription(), $result['description']);
+    }
 
     //
     //DELETE TESTS
