@@ -91,17 +91,24 @@
         });
 
         const cardImage = document.createElement("div");
-        cardImage.classList.add("searchmenu-results-result-container-image");
+        cardImage.classList.add("searchmenu-results-result-image");
 
         const cardImageImg = document.createElement("img");
-        cardImageImg.src = recipe.image;
-        cardImageImg.alt = recipe.name;
-        cardImage.classList.add("searchmenu-results-result-container-image-img");
+        cardImageImg.classList.add("searchmenu-results-result-image-img");
+        
 
 
         const cardInfo = document.createElement("div");
-        cardInfo.classList.add("seachmenu-results-result-container-title");
+        cardInfo.classList.add("searchmenu-results-result-container-title");
         cardInfo.innerHTML = recipe.name;
+
+        cardImage.appendChild(cardImageImg);
+        card.appendChild(cardImage);
+        card.appendChild(cardInfo);
+
+        
+        cardImageImg.src = recipe.image;
+        cardImageImg.alt = recipe.name;
 
         cardImage.appendChild(cardImageImg);
         card.appendChild(cardImage);
