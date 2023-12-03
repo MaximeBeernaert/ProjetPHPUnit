@@ -49,6 +49,7 @@ composer require --dev phpunit/phpunit
     </php>
     <testsuites>
         <testsuite name="Application Test Suite">
+            <directory>./tests/Unit</directory>
             <directory>./tests/integration</directory>
         </testsuite>
     </testsuites>
