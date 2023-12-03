@@ -80,6 +80,8 @@
 
     function recipeCard(recipe) {
 
+        console.log(recipe);
+
         const card = document.createElement("div");
         card.classList.add("searchmenu-results-result-container");
 

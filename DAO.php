@@ -364,12 +364,12 @@ class RecipeDAO
     public function search($searchTerm)
     {
         try {
-            $sql = "SELECT r.id AS id, r.name AS name, r.difficulty AS difficulty, r.description AS description, r.time AS time, r.idCategory AS idCategory, c.name AS categoryName
+            $sql = "SELECT r.id AS id, r.name AS name, r.difficulty AS difficulty, r.description AS description, r.time AS time, r.idCategory AS idCategory, c.name AS categoryName, r.image AS image
             FROM recipes r
             JOIN categories c ON r.idCategory = c.id
             WHERE r.name LIKE :term
-            OR r.id IN (SELECT idRecipe FROM assocrecingr WHERE idIngredient IN (SELECT id FROM ingredients WHERE name LIKE :term ))
-            OR r.idCategory IN (SELECT id FROM categories WHERE name LIKE :term )";
+               OR r.id IN (SELECT idRecipe FROM assocrecingr WHERE idIngredient IN (SELECT id FROM ingredients WHERE name LIKE :term ))
+               OR r.idCategory IN (SELECT id FROM categories WHERE name LIKE :term )";
 
             $searchTerm = "%" . $searchTerm . "%";
 
