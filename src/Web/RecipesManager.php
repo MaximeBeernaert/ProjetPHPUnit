@@ -53,9 +53,7 @@
             const card = document.createElement("div");
             card.classList.add("managermenu-list-recipe-container");
 
-            card.addEventListener("click", function(e) {
-                window.location.href = "/src/Web/displayRecipe.php?recipeId=" + recipe.id;
-            });
+            
 
             const cardImage = document.createElement("div");
             cardImage.classList.add("managermenu-list-recipe-container-image");
@@ -64,7 +62,9 @@
             // cardImageImg.src = recipe.image;
             cardImageImg.alt = recipe.name;
             cardImage.classList.add("managermenu-list-recipe-container-image-img");
-
+            cardImage.addEventListener("click", function(e) {
+                window.location.href = "/src/Web/displayRecipe.php?recipeId=" + recipe.id;
+            });
 
             const cardInfo = document.createElement("div");
             cardInfo.classList.add("managermenu-list-recipe-container-title");
@@ -82,7 +82,7 @@
             const cardUpdate = document.createElement("div");
             cardUpdate.classList.add("managermenu-list-recipe-container-update");
             cardUpdate.innerHTML = "Modifier";
-            cardUpdate.setAttribute("onclick", "window.location.href = '/src/Web/UpdateRecipe.php?recipeId=" + recipe.id + "'");
+            cardUpdate.setAttribute("onclick", "window.location.href = '/src/Web/AddRecipe.php?recipeId=" + recipe.id + "'");
 
             cardImage.appendChild(cardImageImg);
             card.appendChild(cardImage);
@@ -108,5 +108,7 @@
                     window.location.href = "/src/Web/RecipesManager.php";
                 }
             });
+
+
         }
     </script>

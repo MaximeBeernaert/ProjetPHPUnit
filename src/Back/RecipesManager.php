@@ -17,7 +17,14 @@ if (isset($_POST["id"])) {
 
     $RecipeDAO = new RecipeDAO($db);
     $recipes = $RecipeDAO->delete($id);
+    $AssocrecingrDAO = new AssocrecingrDAO($db);
+    $association = $AssocrecingrDAO->deleteAllByRecipeId($id);
+    $StepsDAO = new StepsDAO($db);
+    $steps = $StepsDAO->deleteAllByRecipeId($id);
+
     echo json_encode(array('recipes' => ($recipes)));
 }
+
+
 
 ?>

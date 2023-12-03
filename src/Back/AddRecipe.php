@@ -59,7 +59,14 @@ if (
         $recipe->setIdCategory($categorie);
 
         // Call the create method from the DAO
-        $recipeDAO->create($recipe);
+        if($_POST['idRecipe'] != "") {
+            $recipe->setId($_POST['idRecipe']);
+            $recipeDAO->update($recipe);
+            $assocRecIngrDAO->deleteAllByRecipeId($_POST['idRecipe']);
+            $stepsDAO->deleteAllByRecipeId($_POST['idRecipe']);
+        } else {
+            $recipeDAO->create($recipe);
+        }
 
         // Get the id of the recipe that has just been created
         $idRecipe = $recipeDAO->getLastId();
@@ -109,6 +116,25 @@ if (
     $confirmationClass = "error";
 }
 
+if(isset($_POST['getRecipe'])) {
+    $recipeDAO = new RecipeDAO($db);
+    $assocRecIngrDAO = new AssocRecIngrDAO($db);
+    $ingredientDAO = new IngredientDAO($db);
+    $stepsDAO = new StepsDAO($db);
+
+    $recipe = $recipeDAO->read($_POST['getRecipe']);
+
+    $assocs = $assocRecIngrDAO->readAllByRecipeId($_POST['getRecipe']);
+    
+    foreach($assocs as $key => $assoc) {
+        $ingredient = $ingredientDAO->read($assoc['idIngredient']);
+        $ingredients[$key] = $ingredient;
+    }   
+
+    $steps = $stepsDAO->readStepsByRecipeId($_POST['getRecipe']);
+
+    echo json_encode(array('recipe' => $recipe, 'assocs' => $assocs, 'ingredients' => $ingredients, 'steps' => $steps));
+}
 
 
 if (isset($_POST['ingredients'])) {
