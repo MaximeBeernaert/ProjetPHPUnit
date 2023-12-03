@@ -9,8 +9,11 @@ Ce projet est un exemple de configuration et d'utilisation de PHPUnit pour des t
 
 - Clonez le projet depuis Git, rendez-vous dans le répertoire du projet et exécutez la commande suivante :
 
-``` bash
+```bash
 git clone https://github.com/MaximeBeernaert/ProjetPHPUnit.git
+```
+
+``` bash
 cd ProjetPHPUnit
 ```
 
