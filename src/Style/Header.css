@@ -1,3 +1,12 @@
+.clickable{
+    cursor: pointer;
+}
+.clickable:hover{
+    /* color: #e6e6e6; */
+    background-color: bisque;
+    border-radius: 1em;
+}
+
 .header{
     position: sticky;
     top: 0;
@@ -73,3 +82,4 @@
 .categories-result-container-list-item{
     margin: 0.5em 0 ;
 }
+

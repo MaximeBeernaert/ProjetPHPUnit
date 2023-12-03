@@ -25,7 +25,7 @@
                 <!-- RECIPES -->
                 <div class="mainmenu-inthenews-container-recipes">
                     <!-- FIRST RECIPE -->
-                    <div class="mainmenu-inthenews-container-recipes-primary" id="mainmenu-inthenews-container-recipes-primary">
+                    <div class="mainmenu-inthenews-container-recipes-primary clickable" id="mainmenu-inthenews-container-recipes-primary">
                         <input type="hidden" id="mainmenu-inthenews-container-recipes-primary-id-1">
                         <div class="mainmenu-inthenews-container-recipes-primary-recipe">
                             <div class="mainmenu-inthenews-container-recipes-primary-recipe-image-container">
@@ -46,7 +46,7 @@
                     </div>
                     <!-- OTHER RECIPES -->
                     <div class="mainmenu-inthenews-container-recipes-secondary">
-                        <div class="mainmenu-inthenews-container-recipes-secondary-recipe" id="mainmenu-inthenews-container-recipes-secondary-recipe-1">
+                        <div class="mainmenu-inthenews-container-recipes-secondary-recipe clickable" id="mainmenu-inthenews-container-recipes-secondary-recipe-1">
                             <input type="hidden" id="mainmenu-inthenews-container-recipes-secondary-recipe-id-1">
                             <div class="mainmenu-inthenews-container-recipes-secondary-recipe-image-container">
                                 <div class="mainmenu-inthenews-container-recipes-secondary-recipe-image">
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mainmenu-inthenews-container-recipes-secondary-recipe" id="mainmenu-inthenews-container-recipes-secondary-recipe-2">
+                        <div class="mainmenu-inthenews-container-recipes-secondary-recipe clickable" id="mainmenu-inthenews-container-recipes-secondary-recipe-2">
                             <input type="hidden" id="mainmenu-inthenews-container-recipes-secondary-recipe-id-2">
                             <div class="mainmenu-inthenews-container-recipes-secondary-recipe-image-container">
                                 <div class="mainmenu-inthenews-container-recipes-secondary-recipe-image">
@@ -80,7 +80,7 @@
                 </div>
                 <div class="mainmenu-recipeoftheday-container-recipe">
                     <!-- RECIPE -->
-                    <div class="mainmenu-recipeoftheday-container-recipe" id="mainmenu-recipeoftheday-container-recipe-1">
+                    <div class="mainmenu-recipeoftheday-container-recipe clickable" id="mainmenu-recipeoftheday-container-recipe-1">
                         <input type="hidden" id="mainmenu-recipeoftheday-container-recipe-id-1">
                         <div class="mainmenu-recipeoftheday-container-recipe-image-container">
                             <div class="mainmenu-recipeoftheday-container-recipe-image">
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mainmenu-recipeoftheday-container-recipe">
+                <div class="mainmenu-recipeoftheday-container-recipe clickable">
                     <!-- RECIPE -->
                     <div class="mainmenu-recipeoftheday-container-recipe" id="mainmenu-recipeoftheday-container-recipe-2">
                         <input type="hidden" id="mainmenu-recipeoftheday-container-recipe-id-2">
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mainmenu-recipeoftheday-container-recipe">
+                <div class="mainmenu-recipeoftheday-container-recipe clickable">
                     <!-- RECIPE -->
                     <div class="mainmenu-recipeoftheday-container-recipe" id="mainmenu-recipeoftheday-container-recipe-3">
                         <input type="hidden" id="mainmenu-recipeoftheday-container-recipe-id-3">

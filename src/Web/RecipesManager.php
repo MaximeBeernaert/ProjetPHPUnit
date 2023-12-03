@@ -14,7 +14,7 @@
 
     <div class="managermenu">
         <div class="managermenu-add-recipe">
-            <div class="managermenu-add-recipe-text" onclick="window.location.href = '/src/Web/AddRecipe.php'">
+            <div class="managermenu-add-recipe-text clickable" onclick="window.location.href = '/src/Web/AddRecipe.php'">
                 Ajouter une recette
             </div>
         </div>
@@ -52,6 +52,7 @@
         function recipeCard(recipe) {
             const card = document.createElement("div");
             card.classList.add("managermenu-list-recipe-container");
+            card.classList.add("clickable");
 
             
 

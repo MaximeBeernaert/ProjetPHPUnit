@@ -56,6 +56,7 @@
 
             const card = document.createElement("div");
             card.classList.add("categorymenu-results-result-container");
+            card.classList.add("clickable");
 
             card.addEventListener("click", function(e) {
                 window.location.href = "/src/Web/displayRecipe.php?recipeId=" + recipe.id;

@@ -21,11 +21,11 @@ if (!defined('INCLUDED')) {
     <div class="header-main">
         <!-- CSS LIST OF CATEGORIES -->
         <div class="header-main-left">
-            <div id="header-main-categorylist" class="header-main-categorylist" onclick="showCategories()">
+            <div id="header-main-categorylist" class="header-main-categorylist clickable" onclick="showCategories()">
                 <div class="header-main-categorylist-text">Categories</div>
             </div>
             <!-- LOGO (return to main menu) -->
-            <div id="header-main-logo" class="header-main-logo" onclick="window.location.href = '/src/Web/MainMenu.php'">
+            <div id="header-main-logo" class="header-main-logo clickable" onclick="window.location.href = '/src/Web/MainMenu.php'">
                 <img src="../Images/Logo.png" alt="Logo" class="header-main-logo-img">
             </div>
         </div>
@@ -44,7 +44,7 @@ if (!defined('INCLUDED')) {
         </div>
 
         <!-- LOGIN -->
-        <div id="header-main-login" class="header-main-login" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+        <div id="header-main-login" class="header-main-login clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
             <div class="header-main-login-text">Connexion</div>
         </div>
     </div>
@@ -52,19 +52,19 @@ if (!defined('INCLUDED')) {
     <!-- BOTTOM PART OF HEADER -->
     <div class="header-secondary">
         <div class="header-secondary-container">
-            <div id="header-secondary-container-news" class="header-secondary-container-news" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+            <div id="header-secondary-container-news" class="header-secondary-container-news clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
                 <div class="header-secondary-container-news-text">Actus</div>
             </div>
 
-            <div id="header-secondary-container-fastrecipe" class="header-secondary-container-fastrecipe" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+            <div id="header-secondary-container-fastrecipe" class="header-secondary-container-fastrecipe clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
                 <div class="header-secondary-container-fastrecipe-text">Recettes très très rapides</div>
             </div>
 
-            <div id="header-secondary-container-bestrecipes" class="header-secondary-container-bestrecipes" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
+            <div id="header-secondary-container-bestrecipes" class="header-secondary-container-bestrecipes clickable" onclick="window.alert('Cette fonctionnalité n\'est par encore intégrée.')">
                 <div class="header-secondary-container-bestrecipes-text">Meilleures recettes</div>
             </div>
 
-            <div class="header-secondary-container-seerecipes" onclick="window.location.href = '/src/Web/RecipesManager.php'">
+            <div class="header-secondary-container-seerecipes clickable" onclick="window.location.href = '/src/Web/RecipesManager.php'">
                 <h3>Gérer les recettes</h3>
 
             </div>
