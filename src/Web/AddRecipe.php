@@ -17,7 +17,7 @@
 <body>
 
     <div class="addrecipe-container">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="../Back/AddRecipe.php" method="post">
             <h2>Ajouter une nouvelle recette</h2>
             <label for="nom_recette">Nom de la recette :</label>
             <input type="text" id="nom_recette" name="nom_recette" required>
@@ -35,85 +35,21 @@
             <input type="url" id="photo_recette" name="photo_recette" accept="image/*" required>
 
             <label for="categorie">Catégorie :</label>
-            <select id="categorie" name="categorie" required>
-                <option value="">Sélectionnez une catégorie</option>
-                <option value="entree">Entrée</option>
-                <option value="plat">Plat</option>
-                <option value="dessert">Dessert</option>
+            <select id="categorie" name="categorie" required placeholder="Sélectionnez une catégorie">
+
             </select>
 
             <!-- Display ingredients from DB -->
-            <label for="ingredients">Liste des ingrédients nécessaires :</label>
-            <select id="ingredients" name="ingredients[]" multiple required>
-                <script>
-                    // Fonction pour mettre à jour la liste des ingrédients sélectionnés
-                    function updateSelectedIngredientsList() {
-                        let selectedIngredients = $('#ingredients').val(); // Récupère les valeurs des options sélectionnées
-                        const divQuantities = $('#quantities');
-                        divQuantities.empty(); // Vide le contenu précédent
+            
+            <div class="addrecipe-container-ingredients">
+                <div class="addrecipe-container-ingredients-list" id="addrecipe-container-ingredients-list">
+                    <!-- Will be filled by the button and function -->
+                </div>
+                <div class="addrecipe-container-ingredients-add-ingredient" onclick="addIngredient()">
+                    Ajouter un ingredient
+                </div>
 
-                        if (selectedIngredients && selectedIngredients.length > 0) {
-                            selectedIngredients.forEach(function(ingredient) {
-                                newIngredient();
-                            });
-                        } else {
-                            divQuantities.text('Aucun ingrédient sélectionné');
-                        }
-                    }
-
-                    // Appel AJAX pour obtenir les données des ingrédients
-                    function getIngredients() {
-                        let action = 'getIngredients';
-                        $.ajax({
-                            url: '../Back/AddRecipeBack.php',
-                            method: 'POST',
-                            dataType: 'json',
-                            data: {
-                                action
-                            },
-                            async: true,
-                            success: function(data) {
-                                addOptionsToSelect(data.ingredients); // Utiliser data.ingredients pour créer les options
-                            },
-                            error: function(xhr, textStatus, errorThrown) {
-                                console.log('La requête AJAX a échoué.');
-                                console.log(xhr);
-                                console.log(textStatus);
-                                console.log(errorThrown);
-                            }
-                        });
-                    }
-
-                    // Fonction pour ajouter des options à l'élément select
-                    function addOptionsToSelect(ingredients) {
-                        let select = $('#ingredients');
-
-                        // Parcours des données renvoyées par l'AJAX pour créer et ajouter des options
-                        ingredients.forEach(function(ingredient) {
-                            let newOption = $('<option>', {
-                                value: ingredient.id,
-                                text: ingredient.name
-                            });
-                            select.append(newOption);
-                        });
-
-                        // Écoute les changements dans la sélection des ingrédients
-                        select.on('change', function() {
-                            updateSelectedIngredientsList(); // Appelle la fonction pour mettre à jour la liste des ingrédients sélectionnés
-                        });
-                    }
-
-                    // Appel de la fonction pour récupérer les données des ingrédients lors du chargement de la page
-                    $(document).ready(function() {
-                        getIngredients(); // Appel initial pour récupérer les ingrédients
-
-                        // Événement de changement pour mettre à jour les quantités lorsque la sélection change
-                        $('#ingredients').on('change', function() {
-                            updateSelectedIngredientsList();
-                        });
-                    });
-                </script>
-            </select>
+            </div>
 
             <!-- Display quantities -->
             <div id="quantities">
@@ -190,27 +126,95 @@
         }
     });
 
-    // Add new ingredient
-    function newIngredient() {
-        const divIngredients = document.getElementById('quantities');
-        divIngredients.innerHTML = ''; // Nettoyer le contenu précédent
+    $(document).ready(function() {
+        let categoriesList = "categoriesList";
 
-        const selectedOptions = $('#ingredients option:selected');
-
-        selectedOptions.each(function() {
-            const label = document.createElement('label');
-            label.for = $(this).val();
-            label.textContent = $(this).text();
-
-            const nouvelInput = document.createElement('input');
-            nouvelInput.type = 'text';
-            nouvelInput.name = 'ingredients[]'; // Utilisez un tableau si vous prévoyez de soumettre les données
-            nouvelInput.placeholder = 'Indiquer la quantité de ' + $(this).text() + ' (unité, ml ou g)';
-            nouvelInput.required = true;
-
-            divIngredients.appendChild(label);
-            divIngredients.appendChild(nouvelInput);
-            divIngredients.appendChild(document.createElement('br')); // Ajoute un saut de ligne pour séparer les étapes
+        $.ajax({
+            url: '../Back/AddRecipe.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                categoriesList
+            },
+            async: true,
+            success: function(data) {
+                var categories = data.categories;
+                categories.forEach(category => {
+                    const categorie = document.createElement("option");
+                    categorie.value = category.id;
+                    categorie.innerHTML = category.name;
+                    document.getElementById("categorie").appendChild(categorie);
+                });
+            }
         });
+    });
+
+    function addIngredient()
+    {
+        const container = document.getElementById("addrecipe-container-ingredients-list");
+
+        const ingredient = document.createElement("div");
+        ingredient.classList.add("addrecipe-container-ingredients-list-ingredient");
+
+        const ingredientName = document.createElement("div");
+        ingredientName.classList.add("addrecipe-container-ingredients-list-ingredient-name");
+
+        const ingredientNameSelect = document.createElement("select");
+        ingredientNameSelect.classList.add("addrecipe-container-ingredients-list-ingredient-name-select");
+        ingredientNameSelect.placeholder = "Nom de l'ingrédient";
+        ingredientNameSelect.name = "ingredientName[]";
+
+        ingredientNameSelect.onchange = (e) => {
+            console.log(e.target.value);
+        }
+
+        let ingredients = "ingredients";
+        $.ajax({
+            url: '../Back/AddRecipe.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                ingredients
+            },
+            async: true,
+            success: function(data) {
+                var ingredients = data.ingredients;
+                ingredients.forEach(ingredient => {
+                    const ingredientNameSelectOption = document.createElement("option");
+                    ingredientNameSelectOption.value = ingredient.id;
+                    ingredientNameSelectOption.innerHTML = ingredient.name;
+                    ingredientNameSelect.appendChild(ingredientNameSelectOption);
+                });
+            }
+        });
+
+        ingredientName.appendChild(ingredientNameSelect);
+
+        const ingredientQuantity = document.createElement("div");
+        ingredientQuantity.classList.add("addrecipe-container-ingredients-list-ingredient-quantity");
+
+        const ingredientQuantityInput = document.createElement("input");
+        ingredientQuantityInput.classList.add("addrecipe-container-ingredients-list-ingredient-quantity-input");
+        ingredientQuantityInput.placeholder = "Quantité";
+        ingredientQuantityInput.name = "ingredientQuantity[]";
+
+        const ingredientDelete = document.createElement("div");
+        ingredientDelete.classList.add("addrecipe-container-ingredients-list-ingredient-delete");
+        ingredientDelete.innerHTML = "X";
+        ingredientDelete.onclick = (e) => {
+            ingredient.remove();
+        }
+
+        ingredientQuantity.appendChild(ingredientQuantityInput);
+
+        ingredient.appendChild(ingredientName);
+        ingredient.appendChild(ingredientQuantity);
+
+        ingredient.appendChild(ingredientDelete);
+
+        container.appendChild(ingredient);
+
+
+
     }
 </script>
