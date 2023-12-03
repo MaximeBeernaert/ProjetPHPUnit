@@ -62,7 +62,7 @@
             const cardImageImg = document.createElement("img");
             cardImageImg.src = recipe.image;
             cardImageImg.alt = recipe.name;
-            cardImage.classList.add("managermenu-list-recipe-container-image-img");
+            cardImageImg.classList.add("managermenu-list-recipe-container-image-img");
             cardImage.addEventListener("click", function(e) {
                 window.location.href = "/src/Web/displayRecipe.php?recipeId=" + recipe.id;
             });

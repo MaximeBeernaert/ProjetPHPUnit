@@ -16,20 +16,24 @@
     margin: 2em 1em;
     width: 16em;
     height: 20em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .managermenu-list-recipe-container-image{
-    height: 14em;
-    width: 100%;
+    width: 10em;
+    height: 10em;
     background-color: white;
     border-radius: 1em;
-    margin: 0 auto;
 }
 
 .managermenu-list-recipe-container-image-img{
-    height: 14em;
-    width: 100%;
-    object-fit: cover;
+    width: 10em;
+    height: 10em;
+    background-color: white;
+    border-radius: 1em;
 }
 
 .managermenu-list-recipe-container-title{
@@ -38,6 +42,7 @@
 }
 
 .managermenu-list-recipe-container-options{
+    width: 100%;
     display: flex;
     justify-content: space-around;
     margin: 0.5em 0.5em;
