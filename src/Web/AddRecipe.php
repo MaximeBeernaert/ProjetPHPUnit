@@ -129,6 +129,11 @@
     $(document).ready(function() {
         let categoriesList = "categoriesList";
 
+        const currentUrl = window.location.href;
+
+        // Get search term from URL
+        let params = (new URL(document.location)).searchParams;
+
         $.ajax({
             url: '../Back/AddRecipe.php',
             method: 'POST',
@@ -147,6 +152,44 @@
                 });
             }
         });
+
+        if(params.get("recipeId") != null){
+            let getRecipe = params.get("recipeId");
+            $.ajax({
+                url: '../Back/AddRecipe.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    getRecipe
+                },
+                async: true,
+                success: function(data) {
+                    var recipe = data.recipe;
+                    var assocs = data.assocs;
+                    var ingredients = data.ingredients;
+                    var steps = data.steps;
+
+                    console.log(data);
+                    document.getElementById("nom_recette").value = recipe.name;
+                    document.getElementById("difficulte").value = recipe.difficulty;
+                    document.getElementById("description").value = recipe.description;
+                    document.getElementById("temps_realisation").value = recipe.time;
+                    document.getElementById("photo_recette").value = recipe.image;
+                    document.getElementById("categorie").value = document.getElementById("categorie").options[recipe.idCategory - 1].value;
+
+                    ingredients.forEach(function(ingredient, key) {
+                        console.log(key, ingredient )
+                        addIngredient();
+                        
+                        // document.getElementsByName("ingredientName[]").value = ingredient.id;
+                        // document.getElementsByName('ingredientName[]')[key].querySelector('option')[ingredient.id].selected = 'selected'
+
+                    });
+
+                }
+            });
+        }
+
     });
 
     function addIngredient() {

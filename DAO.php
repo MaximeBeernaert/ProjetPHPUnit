@@ -303,7 +303,12 @@ class RecipeDAO
     {
         try {
             $sql = "SELECT * FROM recipes WHERE id = :id";
+            // $sql = "SELECT r.id AS id, r.name AS name, r.difficulty AS difficulty, r.description AS description, r.time AS time, r.idCategory AS idCategory, c.name AS categoryName
+            // FROM recipes r
+            // JOIN categories c ON r.idCategory = c.id
+            // WHERE id LIKE :id";
             $stmt = $this->db->prepare($sql);
+            
 
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -549,6 +554,21 @@ class StepsDAO
             echo "Error during step reading: " . $e->getMessage();
         }
     }
+
+    public function deleteAllByRecipeId($recipeId)
+    {
+        try {
+            $sql = "DELETE FROM steps WHERE idRecipe = :recipeId";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':recipeId', $recipeId);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during step deletion: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for association recipe-ingredient table
@@ -636,6 +656,38 @@ class AssocrecingrDAO
             return true;
         } catch (Exception $e) {
             echo "Error during association deletion: " . $e->getMessage();
+        }
+    }
+
+    public function deleteAllByRecipeId($recipeId)
+    {
+        try {
+            $sql = "DELETE FROM assocrecingr WHERE idRecipe = :recipeId";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':recipeId', $recipeId);
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            echo "Error during association deletion: " . $e->getMessage();
+        }
+    }
+
+    public function readAllByRecipeId($recipeId)
+    {
+        try {
+            $sql = "SELECT * FROM assocrecingr WHERE idRecipe = :recipeId";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(':recipeId', $recipeId);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during association reading: " . $e->getMessage();
         }
     }
 }
