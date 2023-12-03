@@ -421,6 +421,22 @@ class RecipeDAO
             echo "Error during recipe reading: " . $e->getMessage();
         }
     }
+
+    public function readAll()
+    {
+        try {
+            $sql = "SELECT * FROM recipes";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error during recipe reading: " . $e->getMessage();
+        }
+    }
 }
 
 //CRUD for step of recipe table

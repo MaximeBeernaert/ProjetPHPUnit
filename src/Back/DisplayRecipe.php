@@ -27,3 +27,5 @@ if (isset($_POST["steps"])) {
     $steps = $stepDAO->readStepsByRecipeId($recipeId);
     echo json_encode(array('steps' => ($steps)));
 }
+
+?>

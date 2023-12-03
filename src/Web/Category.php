@@ -43,12 +43,6 @@
                 },
                 async: true,
                 success: function(data) {
-                    // Clear previous results
-                    // while (document.querySelector(".searchmenu-results").firstChild) {
-                    //     document.querySelector(".searchmenu-results").firstChild.remove();
-                    // }
-                    console.log(data.recipes)
-                    // Display results from the call as recipes cards
                     var recipes = data.recipes;
                     recipes.forEach(recipe => {
                         recipeCard(recipe);
@@ -61,6 +55,10 @@
 
             const card = document.createElement("div");
             card.classList.add("categorymenu-results-result-container");
+
+            card.addEventListener("click", function(e) {
+                window.location.href = "/src/Web/displayRecipe.php?recipeId=" + recipe.id;
+            });
 
             const cardImage = document.createElement("div");
             cardImage.classList.add("categorymenu-results-result-container-image");

@@ -14,3 +14,5 @@ if (isset($_POST["arrayRecipes"])) {
     }
     echo json_encode(array('arrayRecipes' => ($arrayRecipes)));
 }
+
+?>

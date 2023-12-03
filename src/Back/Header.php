@@ -12,3 +12,5 @@ if (isset($_POST["categories"])) {
 
     echo json_encode(array('categories' => ($categories)));
 }
+
+?>
