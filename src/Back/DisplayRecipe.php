@@ -9,7 +9,7 @@ if (isset($_POST["recipe"])) {
 
     $categoryDAO = new RecipeDAO($db);
     $recipe = $categoryDAO->read($recipe);
-    echo json_encode(array('recipe' =>($recipe)));
+    echo json_encode(array('recipe' => ($recipe)));
 }
 
 if (isset($_POST["ingredients"])) {
@@ -17,15 +17,13 @@ if (isset($_POST["ingredients"])) {
 
     $categoryDAO = new IngredientDAO($db);
     $ingredients = $categoryDAO->readByRecipeId($recipeId);
-    echo json_encode(array('ingredients' =>($ingredients)));
+    echo json_encode(array('ingredients' => ($ingredients)));
 }
 
 if (isset($_POST["steps"])) {
     $recipeId = $_POST["steps"];
 
-    $categoryDAO = new StepsDAO($db);
-    $steps = $categoryDAO->readByRecipeId($recipeId);
-    echo json_encode(array('steps' =>($steps)));
+    $stepDAO = new StepsDAO($db);
+    $steps = $stepDAO->readStepsByRecipeId($recipeId);
+    echo json_encode(array('steps' => ($steps)));
 }
-
-?>

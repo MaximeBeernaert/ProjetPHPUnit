@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $photoRecette = $_POST['photo_recette'];
 
             // Create a new recipe object
-            $recipe = new Recipe("", "", "", "", "", "");
+            $recipe = new Recipe("", "", "", "", "", "", "");
 
             // Set the values of the recipe object
             $recipe->setName($nomRecette);
