@@ -145,3 +145,5 @@ if (isset($_POST['action'])) {
 
     echo json_encode(array('ingredients' => $ingredients));
 }
+
+?>

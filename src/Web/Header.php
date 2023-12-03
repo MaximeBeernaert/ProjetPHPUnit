@@ -58,7 +58,7 @@
                 <div class="header-secondary-container-bestrecipes-text">Meilleures recettes</div>
             </div>
 
-            <div class="header-secondary-container-seerecipes">
+            <div class="header-secondary-container-seerecipes" onclick="window.location.href = '/src/Web/RecipesManager.php'">
                 <h3>Gérer les recettes</h3>
 
             </div>

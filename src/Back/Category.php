@@ -11,3 +11,5 @@ if (isset($_POST["name"])) {
     $recipes = $categoryDAO->getRecipesByCategory($name);
     echo json_encode(array('recipes' => ($recipes)));
 }
+
+?>
