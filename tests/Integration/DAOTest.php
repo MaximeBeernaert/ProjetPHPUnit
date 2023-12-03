@@ -66,7 +66,8 @@ class DAOTest extends TestCase
               description TEXT,
               time INTEGER,
               image TEXT,
-              idCategory INTEGER
+              idCategory INTEGER,
+              date CURRENT_TIMESTAMP
             );
             CREATE TABLE steps (
               id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -501,8 +502,6 @@ class DAOTest extends TestCase
         $this->assertEquals($ingredientToUpdate->getQuantity(), $updatedIngredient['quantity']);
     }
 
-
-
     public function testUpdateRecipes(): void
     {
         $recipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1);
@@ -538,5 +537,91 @@ class DAOTest extends TestCase
         $this->assertEquals($step->getIdRecipe(), $result['idRecipe']);
         $this->assertEquals($step->getNumber(), $result['number']);
         $this->assertEquals($step->getDescription(), $result['description']);
+    }
+
+    //
+    //OTHER TESTS on DAO
+    //
+
+    //
+    //CategoryDAO tests
+    //
+
+    //ReadAllCategories test
+    public function testReadAllCategories(): void
+    {
+        //Create a new category
+        $category = new Category(1, "name", "image");
+
+        //Push the category to the database
+        $this->categories->create($category);
+
+        //Try to read category by id
+        $result = $this->categories->read($category->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM categories WHERE id = :id');
+        $stmt->execute(['id' => $category->getId()]);
+
+        //Assertion
+        $this->assertEquals($category->getId(), $result['id']);
+        $this->assertEquals($category->getName(), $result['name']);
+        $this->assertEquals($category->getImage(), $result['image']);
+
+        $result = $this->categories->readAll();
+
+        $this->assertEquals($category->getId(), $result[0]['id']);
+        $this->assertEquals($category->getName(), $result[0]['name']);
+        $this->assertEquals($category->getImage(), $result[0]['image']);
+    }
+
+    //getRecipesByCategory test
+    public function testGetRecipesByCategory(): void
+    {
+        // Create a new category
+        $category = new Category(1, "dessert", "image");
+
+        // Push the category to the database
+        $this->categories->create($category);
+
+        // Try to read category by id
+        $result = $this->categories->read($category->getId());
+
+        // Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM categories WHERE id = :id');
+        $stmt->execute(['id' => $category->getId()]);
+
+        // Assertion
+        $this->assertEquals($category->getId(), $result['id']);
+        $this->assertEquals($category->getName(), $result['name']);
+        $this->assertEquals($category->getImage(), $result['image']);
+
+        // Create a new recipe
+        $recipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1, "");
+
+        // Push the recipe to the database
+        $this->recipes->create($recipe);
+
+        // Try to read recipe by id
+        $result = $this->recipes->read($recipe->getId());
+
+        // Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+        $stmt->execute(['id' => $recipe->getId()]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Get recipes by category name
+        $recipesByCategory = $this->categories->getRecipesByCategory($category->getName());
+
+        // Assertions for recipes by category
+        foreach ($recipesByCategory as $retrievedRecipe) {
+            $this->assertEquals($retrievedRecipe['id'], $recipe->getId());
+            $this->assertEquals($retrievedRecipe['name'], $recipe->getName());
+            $this->assertEquals($retrievedRecipe['difficulty'], $recipe->getDifficulty());
+            $this->assertEquals($retrievedRecipe['description'], $recipe->getDescription());
+            $this->assertEquals($retrievedRecipe['time'], $recipe->getTime());
+            $this->assertEquals($retrievedRecipe['image'], $recipe->getImage());
+            $this->assertEquals($retrievedRecipe['date'], $recipe->getDate());
+        }
     }
 }

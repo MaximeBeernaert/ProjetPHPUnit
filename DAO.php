@@ -107,13 +107,14 @@ class CategoryDAO
         }
     }
 
+    //Read recipes by category name
     public function getRecipesByCategory($name)
     {
         try {
             $sql = "SELECT recipes.id, recipes.name, recipes.difficulty, recipes.description, recipes.time, recipes.image, recipes.date
-            FROM recipes
-            JOIN categories ON recipes.idCategory = categories.id
-            WHERE categories.name = :name;";
+                FROM recipes
+                JOIN categories ON recipes.idCategory = categories.id
+                WHERE categories.name = :name";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
@@ -123,7 +124,7 @@ class CategoryDAO
 
             return $result;
         } catch (Exception $e) {
-            echo "Error during recipe reading: " . $e->getMessage();
+            throw new Exception("Error during recipe reading: " . $e->getMessage());
         }
     }
 }
