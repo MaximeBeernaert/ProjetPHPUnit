@@ -12,6 +12,9 @@
     top: 0;
     z-index: 999;
 }
+.header-main-left{
+    width:500px;
+}
 .header-main, .header-secondary, .header-main-left{
     display: flex;
 }
