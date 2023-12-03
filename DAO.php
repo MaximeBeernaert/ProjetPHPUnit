@@ -145,13 +145,15 @@ class IngredientDAO
             $name = $ingredient->getName();
             $price = $ingredient->getPrice();
             $image = $ingredient->getImage();
+            $quantity = $ingredient->getQuantity();
 
-            $sql = "INSERT INTO ingredients (name, price, image) VALUES (:name, :price, :image)";
+            $sql = "INSERT INTO ingredients (name, price, image, quantity) VALUES (:name, :price, :image, :quantity)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':image', $image);
+            $stmt->bindParam(':quantity', $quantity);
             $stmt->execute();
 
             return true;
@@ -185,13 +187,15 @@ class IngredientDAO
             $id = $ingredient->getId();
             $name = $ingredient->getName();
             $price = $ingredient->getPrice();
+            $quantity = $ingredient->getQuantity();
 
-            $sql = "UPDATE ingredients SET name = :name, price = :price WHERE id = :id";
+            $sql = "UPDATE ingredients SET name = :name, price = :price, quantity = :quantity WHERE id = :id";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':quantity', $quantity);
             $stmt->execute();
 
             return true;

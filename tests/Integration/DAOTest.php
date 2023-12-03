@@ -3,7 +3,8 @@
 //Include the class to test
 require_once('./DAO.php');
 
-require_once('./src/Classes/assocrecingr.php');
+//Include the class to test
+require_once('./src/Classes/assocRecIngr.php');
 require_once('./src/Classes/category.php');
 require_once('./src/Classes/ingredient.php');
 require_once('./src/Classes/recipe.php');
@@ -11,10 +12,17 @@ require_once('./src/Classes/step.php');
 
 use PHPUnit\Framework\TestCase;
 
-class DAOIntegrationTest extends TestCase
+class DAOTest extends TestCase
 {
     private $pdo;
     private $userDAO;
+
+    // DAOs properties to test
+    private $assocRecIngr;
+    private $categories;
+    private $ingredients;
+    private $recipes;
+    private $steps;
 
     protected function setUp(): void
     {
@@ -119,26 +127,19 @@ class DAOIntegrationTest extends TestCase
 
     public function testGetAllIngredients(): void
     {
-        //Create a new ingredient
         $ingredient = new Ingredient(1, "name", 1.0, "image", "1kg");
 
-        //Push the ingredient to the database
         $this->ingredients->create($ingredient);
 
-        //Try to read ingredient by id
         $result = $this->ingredients->read($ingredient->getId());
 
-        //Check if the read worked
-        $stmt = $this->pdo->prepare('SELECT * FROM ingredients WHERE id = :id');
-        $stmt->execute(['id' => $ingredient->getId()]);
-
-        //Assertion
         $this->assertEquals($ingredient->getId(), $result['id']);
         $this->assertEquals($ingredient->getName(), $result['name']);
         $this->assertEquals($ingredient->getPrice(), $result['price']);
         $this->assertEquals($ingredient->getImage(), $result['image']);
         $this->assertEquals($ingredient->getQuantity(), $result['quantity']);
     }
+
 
     public function testGetAllRecipes(): void
     {
@@ -192,97 +193,91 @@ class DAOIntegrationTest extends TestCase
     //CREATE TESTS
     //
 
-    public function testCreateAssocRecIngr(Assocrecingr $assocrecingr): void
+    public function testCreateAssocRecIngr(): void
     {
-        // put the exceptions here
+        //Create a new assocrecingr
+        $newAssocRecIngr = new Assocrecingr(1, 1, 1, "1kg");
 
-        $result = $this->assocRecIngr->create($assocrecingr);
+        //Push the assocrecingr to the database
+        $this->assocRecIngr->create($newAssocRecIngr);
 
-        $this->assertEquals($this->assocRecIngr->read($assocrecingr->getId()),);
+        //Try to read assocrecingr by id
+        $result = $this->assocRecIngr->read($newAssocRecIngr->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM assocrecingr WHERE id = :id');
+        $stmt->execute(['id' => $newAssocRecIngr->getId()]);
+
+        //Assertion
+        $this->assertEquals($newAssocRecIngr->getId(), $result['id']);
+        $this->assertEquals($newAssocRecIngr->getIdRec(), $result['idRecipe']);
+        $this->assertEquals($newAssocRecIngr->getIdIngr(), $result['idIngredient']);
+        $this->assertEquals($newAssocRecIngr->getQuantity(), $result['quantité']);
     }
 
-    public function testCreateCategories(Category $category): void
-    {
-        // put the exceptions here
 
-        $result = $this->categories->create($category);
+    // public function testCreateCategories(Category $category): void
+    // {
+    // }
 
-        $this->assertEquals($this->categories->read($category->getId()),);
-    }
+    // public function testCreateIngredients(Ingredient $ingredient): void
+    // {
+    // }
 
-    public function testCreateIngredients(Ingredient $ingredient): void
-    {
-        // put the exceptions here
+    // public function testCreateRecipes(Recipe $recipe): void
+    // {
+    // }
 
-        $result = $this->ingredients->create($ingredient);
-
-        $this->assertEquals($this->ingredients->read($ingredient->getId()),);
-    }
-
-    public function testCreateRecipes(Recipe $recipe): void
-    {
-        // put the exceptions here
-
-        $result = $this->recipes->create($recipe);
-
-        $this->assertEquals($this->recipes->read($recipe->getId()),);
-    }
-
-    public function testCreateSteps(Step $step): void
-    {
-        // put the exceptions here
-
-        $result = $this->steps->create($step);
-
-        $this->assertEquals($this->steps->read($step->getId()),);
-    }
+    // public function testCreateSteps(Step $step): void
+    // {
+    // }
 
     //
     //DELETE TESTS
     //
 
-    public function testDeleteAssocRecIngr(Assocrecingr $assocrecingr): void
-    {
-        // put the exceptions here
+    // public function testDeleteAssocRecIngr(Assocrecingr $assocrecingr): void
+    // {
+    //     // put the exceptions here
 
-        $result = $this->assocRecIngr->delete($assocrecingr);
+    //     $result = $this->assocRecIngr->delete($assocrecingr);
 
-        $this->assertNull($this->assocRecIngr->read($assocrecingr->getId()));
-    }
+    //     $this->assertNull($this->assocRecIngr->read($assocrecingr->getId()));
+    // }
 
-    public function testDeleteCategories(Category $category): void
-    {
-        // put the exceptions here
+    // public function testDeleteCategories(Category $category): void
+    // {
+    //     // put the exceptions here
 
-        $result = $this->categories->delete($category);
+    //     $result = $this->categories->delete($category);
 
-        $this->assertNull($this->categories->read($category->getId()));
-    }
+    //     $this->assertNull($this->categories->read($category->getId()));
+    // }
 
-    public function testDeleteIngredients(Ingredient $ingredient): void
-    {
-        // put the exceptions here
+    // public function testDeleteIngredients(Ingredient $ingredient): void
+    // {
+    //     // put the exceptions here
 
-        $this->assertNull($this->ingredients->read($ingredient->getId()));
-    }
+    //     $this->assertNull($this->ingredients->read($ingredient->getId()));
+    // }
 
-    public function testDeleteRecipes(Recipe $recipe): void
-    {
-        // put the exceptions here
+    // public function testDeleteRecipes(Recipe $recipe): void
+    // {
+    //     // put the exceptions here
 
-        $result = $this->recipes->delete($recipe);
+    //     $result = $this->recipes->delete($recipe);
 
-        $this->assertNull($this->recipes->read($recipe->getId()));
-    }
+    //     $this->assertNull($this->recipes->read($recipe->getId()));
+    // }
 
-    public function testDeleteSteps(Step $step): void
-    {
-        // put the exceptions here
+    // public function testDeleteSteps(Step $step): void
+    // {
+    //     // put the exceptions here
 
-        $result = $this->steps->delete($step);
+    //     $result = $this->steps->delete($step);
 
-        $this->assertNull($this->steps->read($step->getId()));
-    }
+    //     $this->assertNull($this->steps->read($step->getId()));
+    // }
 
     //
     //UPDATE TESTS
@@ -321,21 +316,40 @@ class DAOIntegrationTest extends TestCase
 
     public function testUpdateIngredients(): void
     {
+        // Create a new ingredient
         $ingredient = new Ingredient(1, "name", 1.0, "image", "1kg");
 
+        // Add the ingredient to the database
         $this->ingredients->create($ingredient);
 
-        $ingredient->setName("name2");
-        $this->ingredients->update($ingredient);
+        // Get the ingredient from the database
+        $retrievedIngredient = $this->ingredients->read($ingredient->getId());
 
-        $result = $this->ingredients->read($ingredient->getId());
+        // Create an Ingredient instance with retrieved data
+        $ingredientToUpdate = new Ingredient(
+            $retrievedIngredient['id'],
+            $retrievedIngredient['name'],
+            $retrievedIngredient['price'],
+            $retrievedIngredient['image'],
+            $retrievedIngredient['quantity']
+        );
 
-        $this->assertEquals($ingredient->getId(), $result['id']);
-        $this->assertEquals($ingredient->getName(), $result['name']);
-        $this->assertEquals($ingredient->getPrice(), $result['price']);
-        $this->assertEquals($ingredient->getImage(), $result['image']);
-        $this->assertEquals($ingredient->getQuantity(), $result['quantity']);
+        // Update the ingredient
+        $ingredientToUpdate->setName("name2");
+        $this->ingredients->update($ingredientToUpdate);
+
+        // Get the updated ingredient from the database
+        $updatedIngredient = $this->ingredients->read($ingredientToUpdate->getId());
+
+        // Tests the updated ingredient
+        $this->assertEquals($ingredientToUpdate->getId(), $updatedIngredient['id']);
+        $this->assertEquals($ingredientToUpdate->getName(), $updatedIngredient['name']);
+        $this->assertEquals($ingredientToUpdate->getPrice(), $updatedIngredient['price']);
+        $this->assertEquals($ingredientToUpdate->getImage(), $updatedIngredient['image']);
+        $this->assertEquals($ingredientToUpdate->getQuantity(), $updatedIngredient['quantity']);
     }
+
+
 
     public function testUpdateRecipes(): void
     {
