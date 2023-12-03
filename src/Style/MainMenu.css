@@ -64,7 +64,8 @@
 .mainmenu-inthenews-container-recipes-primary-recipe-image img {
     width: 100%;
     height: 20em;
-
+    background-color: white;
+    border-radius: 1em;
     object-fit: cover;
 }
 
@@ -96,7 +97,8 @@
 .mainmenu-inthenews-container-recipes-secondary-recipe-image img {
     width: 100%;
     height: 10em;
-
+    background-color: white;
+    border-radius: 1em;
     object-fit: cover;
 }
 
@@ -121,6 +123,8 @@
 .mainmenu-recipeoftheday-container-recipe-image img{
     width: 20em;
     height: 10em;
+    background-color: white;
+    border-radius: 1em;
     object-fit: cover;
 }
 
