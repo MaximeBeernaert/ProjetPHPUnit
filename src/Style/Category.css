@@ -20,14 +20,14 @@
 .categorymenu-results-result-container{
     margin: 2em 1em;
     width: 16em;
-    background-color: lightgray;
     height: 20em;
 }
 
 .categorymenu-results-result-container-image{
     height: 14em;
     width: 100%;
-    background-color: gray;
+    background-color: white;
+    border-radius: 1em;
     margin: 0 auto;
 }
 
