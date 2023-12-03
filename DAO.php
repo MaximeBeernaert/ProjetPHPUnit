@@ -224,7 +224,7 @@ class IngredientDAO
     public function readByRecipeId($id)
     {
         try {
-            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price, i.image AS image, a.quantitÃ© AS quantity
+            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price, i.image AS image, a.quantité AS quantity
             FROM assocrecingr a
             JOIN ingredients i ON a.idIngredient = i.id
             WHERE a.idRecipe = :id";
@@ -546,12 +546,12 @@ class AssocrecingrDAO
             $idIngredient = $assocrecingr->getIdIngr();
             $quantite = $assocrecingr->getQuantity();
 
-            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient, quantitÃ©) VALUES (:idRecipe, :idIngredient, :quantitÃ©)";
+            $sql = "INSERT INTO assocrecingr (idRecipe, idIngredient, quantité) VALUES (:idRecipe, :idIngredient, :quantité)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindParam(':idRecipe', $idRecipe);
             $stmt->bindParam(':idIngredient', $idIngredient);
-            $stmt->bindParam(':quantitÃ©', $quantite);
+            $stmt->bindParam(':quantité', $quantite);
             $stmt->execute();
 
             return true;
