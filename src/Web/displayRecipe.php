@@ -106,6 +106,7 @@
                     data.ingredients.forEach(ingredient => {
                         const cardIngredient = document.createElement("div");
                         cardIngredient.classList.add("recipemenu-ingredients-list-ingredient");
+                        cardIngredient.classList.add("clickable");
 
                         const cardIngredientName = document.createElement("div");
                         cardIngredientName.classList.add("recipemenu-ingredients-list-ingredient-name");
