@@ -1,56 +1,55 @@
 <DOCTYPE html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../Style/RecipesManager.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<?php
-require_once __DIR__ . '/../Web/Header.php';
-?>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <?php
+        define('INCLUDED', true);
+        require_once('Header.php');
+        ?>
+        <link rel="stylesheet" href="../Style/RecipesManager.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
 
-<div class="managermenu">
-    <div class="managermenu-add-recipe">
-        <div class="managermenu-add-recipe-text" onclick="window.location.href = '/src/Web/AddRecipe.php'">
-            Ajouter une recette
+    <div class="managermenu">
+        <div class="managermenu-add-recipe">
+            <div class="managermenu-add-recipe-text" onclick="window.location.href = '/src/Web/AddRecipe.php'">
+                Ajouter une recette
+            </div>
+        </div>
+        <div class="managermenu-list">
+
         </div>
     </div>
-    <div class="managermenu-list">
-
-    </div>
-</div>
 
 
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
             listAllRecipes();
         });
 
-    function listAllRecipes() 
-    {
-        var recipes = "recipes"
-        $.ajax({
-            url: '../Back/RecipesManager.php',
-            method: 'POST',
-            dataType: 'json',
-            async: true,
-            data: {
-                recipes
-            },
-            success: function(data) {
-                console.log(data.recipes);
-                var recipes = data.recipes;
-                recipes.forEach(recipe => {
-                    recipeCard(recipe);
-                });
-            }
-        });
-    }
+        function listAllRecipes() {
+            var recipes = "recipes"
+            $.ajax({
+                url: '../Back/RecipesManager.php',
+                method: 'POST',
+                dataType: 'json',
+                async: true,
+                data: {
+                    recipes
+                },
+                success: function(data) {
+                    console.log(data.recipes);
+                    var recipes = data.recipes;
+                    recipes.forEach(recipe => {
+                        recipeCard(recipe);
+                    });
+                }
+            });
+        }
 
-    function recipeCard(recipe)
-    {
+        function recipeCard(recipe) {
             const card = document.createElement("div");
             card.classList.add("managermenu-list-recipe-container");
 
@@ -93,23 +92,21 @@ require_once __DIR__ . '/../Web/Header.php';
             card.appendChild(cardOptions);
 
             document.querySelector(".managermenu-list").appendChild(card);
-    }
+        }
 
-    function deleteRecipe(recipeId)
-    {
-        let id = recipeId;
-        $.ajax({
-            url: '../Back/RecipesManager.php',
-            method: 'POST',
-            dataType: 'json',
-            async: true,
-            data: {
-                id
-            },
-            success: function(data) {
-                window.location.href = "/src/Web/RecipesManager.php";
-            }
-        });
-    }
-    
-</script>
+        function deleteRecipe(recipeId) {
+            let id = recipeId;
+            $.ajax({
+                url: '../Back/RecipesManager.php',
+                method: 'POST',
+                dataType: 'json',
+                async: true,
+                data: {
+                    id
+                },
+                success: function(data) {
+                    window.location.href = "/src/Web/RecipesManager.php";
+                }
+            });
+        }
+    </script>

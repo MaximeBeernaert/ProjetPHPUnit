@@ -5,19 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajout d'une recette</title>
+    <?php
+    define('INCLUDED', true);
+    require_once('Header.php');
+    require("../Back/AddRecipeBack.php");
+    ?>
     <link rel="stylesheet" href="../Style/AddRecipe.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
-<?php
-
-require("../Back/AddRecipeBack.php");
-
-?>
-
 <body>
-
-    <?php include 'Header.php' ?>
 
     <div class="addrecipe-container">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

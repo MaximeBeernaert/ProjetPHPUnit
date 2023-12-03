@@ -4,15 +4,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <?php
+        define('INCLUDED', true);
+        require_once('Header.php');
+        ?>
         <link rel="stylesheet" href="../Style/MainMenu.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     </head>
-
-    <?php
-    require_once __DIR__ . '/../Web/Header.php';
-    ?>
-
 
     <div class="mainmenu">
         <!-- Category 'IN THE NEWS' -->
