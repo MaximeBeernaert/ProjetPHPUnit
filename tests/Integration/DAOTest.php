@@ -309,48 +309,127 @@ class DAOTest extends TestCase
     //DELETE TESTS
     //
 
-    // public function testDeleteAssocRecIngr(Assocrecingr $assocrecingr): void
-    // {
-    //     // put the exceptions here
+    public function testDeleteAssocRecIngr(): void
+    {
+        //Create a new assocrecingr
+        $assocrecingr = new Assocrecingr(1, 1, 1, "1kg");
 
-    //     $result = $this->assocRecIngr->delete($assocrecingr);
+        //Push the assocrecingr to the database
+        $this->assocRecIngr->create($assocrecingr);
 
-    //     $this->assertNull($this->assocRecIngr->read($assocrecingr->getId()));
-    // }
+        //Try to read assocrecingr by id
+        $result = $this->assocRecIngr->read($assocrecingr->getId());
 
-    // public function testDeleteCategories(Category $category): void
-    // {
-    //     // put the exceptions here
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM assocrecingr WHERE id = :id');
+        $stmt->execute(['id' => $assocrecingr->getId()]);
 
-    //     $result = $this->categories->delete($category);
+        //Assertion
+        $this->assertEquals($assocrecingr->getId(), $result['id']);
+        $this->assertEquals($assocrecingr->getIdRec(), $result['idRecipe']);
+        $this->assertEquals($assocrecingr->getIdIngr(), $result['idIngredient']);
+        $this->assertEquals($assocrecingr->getQuantity(), $result['quantité']);
 
-    //     $this->assertNull($this->categories->read($category->getId()));
-    // }
+        $result = $this->assocRecIngr->delete($assocrecingr->getID());
+    }
 
-    // public function testDeleteIngredients(Ingredient $ingredient): void
-    // {
-    //     // put the exceptions here
+    public function testDeleteCategories(): void
+    {
+        //Create a new category
+        $category = new Category(1, "name", "image");
 
-    //     $this->assertNull($this->ingredients->read($ingredient->getId()));
-    // }
+        //Push the category to the database
+        $this->categories->create($category);
 
-    // public function testDeleteRecipes(Recipe $recipe): void
-    // {
-    //     // put the exceptions here
+        //Try to read category by id
+        $result = $this->categories->read($category->getId());
 
-    //     $result = $this->recipes->delete($recipe);
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM categories WHERE id = :id');
+        $stmt->execute(['id' => $category->getId()]);
 
-    //     $this->assertNull($this->recipes->read($recipe->getId()));
-    // }
+        //Assertion
+        $this->assertEquals($category->getId(), $result['id']);
+        $this->assertEquals($category->getName(), $result['name']);
+        $this->assertEquals($category->getImage(), $result['image']);
 
-    // public function testDeleteSteps(Step $step): void
-    // {
-    //     // put the exceptions here
+        $result = $this->categories->delete($category->getId());
+    }
 
-    //     $result = $this->steps->delete($step);
+    public function testDeleteIngredients(): void
+    {
+        //Create a new ingredient
+        $ingredient = new Ingredient(1, "name", 1.0, "image", "1kg");
 
-    //     $this->assertNull($this->steps->read($step->getId()));
-    // }
+        //Push the ingredient to the database
+        $this->ingredients->create($ingredient);
+
+        //Try to read ingredient by id
+        $result = $this->ingredients->read($ingredient->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM ingredients WHERE id = :id');
+        $stmt->execute(['id' => $ingredient->getId()]);
+
+        //Assertion
+        $this->assertEquals($ingredient->getId(), $result['id']);
+        $this->assertEquals($ingredient->getName(), $result['name']);
+        $this->assertEquals($ingredient->getPrice(), $result['price']);
+        $this->assertEquals($ingredient->getImage(), $result['image']);
+        $this->assertEquals($ingredient->getQuantity(), $result['quantity']);
+
+        $result = $this->ingredients->delete($ingredient->getId());
+    }
+
+    public function testDeleteRecipes(): void
+    {
+        //Create a new recipe
+        $recipe = new Recipe(1, "platName", "difficulty", "description", "01:00:00", "url", 1);
+
+        //Push the recipe to the database
+        $this->recipes->create($recipe);
+
+        //Try to read recipe by id
+        $result = $this->recipes->read($recipe->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
+
+        //Assertion
+        $this->assertEquals($recipe->getId(), $result['id']);
+        $this->assertEquals($recipe->getName(), $result['name']);
+        $this->assertEquals($recipe->getDifficulty(), $result['difficulty']);
+        $this->assertEquals($recipe->getDescription(), $result['description']);
+        $this->assertEquals($recipe->getTime(), $result['time']);
+        $this->assertEquals($recipe->getImage(), $result['image']);
+        $this->assertEquals($recipe->getIdCategory(), $result['idCategory']);
+
+        $result = $this->recipes->delete($recipe->getId());
+    }
+
+    public function testDeleteSteps(): void
+    {
+        //Create a new step
+        $step = new Step(1, 1, 1, "test");
+
+        //Push the step to the database
+        $this->steps->create($step);
+
+        //Try to read step by id
+        $result = $this->steps->read($step->getId());
+
+        //Check if the read worked
+        $stmt = $this->pdo->prepare('SELECT * FROM steps WHERE id = :id');
+        $stmt->execute(['id' => $step->getId()]);
+
+        //Assertion
+        $this->assertEquals($step->getId(), $result['id']);
+        $this->assertEquals($step->getIdRecipe(), $result['idRecipe']);
+        $this->assertEquals($step->getNumber(), $result['number']);
+        $this->assertEquals($step->getDescription(), $result['description']);
+
+        $result = $this->steps->delete($step->getId());
+    }
 
     //
     //UPDATE TESTS
