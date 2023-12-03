@@ -9,7 +9,7 @@
 </head>
 
 <?php
-    require_once __DIR__ . '/../Web/Header.php';
+require_once __DIR__ . '/../Web/Header.php';
 ?>
 
 
@@ -18,7 +18,7 @@
 
     </div>
     <div class="searchmenu-results">
-        
+
     </div>
 </div>
 
@@ -30,25 +30,25 @@
 
         // Get search term from URL
         let params = (new URL(document.location)).searchParams;
-        if((params.get("searchTerm"))!== undefined){
+        if ((params.get("searchTerm")) !== undefined) {
             let searchTerm = params.get("searchTerm");
             document.getElementById("searchInput").value = searchTerm;
             // Get searched results with AJAX
             searchTerms(searchTerm);
         }
-        
+
         // Listener to search terms
         $('#searchInput').on('input', function() {
             var searchTerm = $(this).val();
-            if(searchTerm.length < 1) {
+            if (searchTerm.length < 1) {
                 document.getElementById("searchmenu-terms").innerHTML = 'Faites une recherche... ';
                 history.replaceState('', '', '/src/Web/Search.php?searchTerm=');
-            }else{
-                history.replaceState('', '', '/src/Web/Search.php?searchTerm='+searchTerm+'');
+            } else {
+                history.replaceState('', '', '/src/Web/Search.php?searchTerm=' + searchTerm + '');
                 searchTerms(searchTerm);
             }
         });
-        
+
     });
 
     function searchTerms(searchTerm) {
@@ -60,12 +60,12 @@
             data: {
                 searchTerm
             },
-            async:      true,
+            async: true,
             success: function(data) {
-                if(searchTerm.length > 0) {
+                if (searchTerm.length > 0) {
                     document.getElementById("searchmenu-terms").innerHTML = searchTerm;
                 }
-                
+
                 // Clear previous results
                 while (document.querySelector(".searchmenu-results").firstChild) {
                     document.querySelector(".searchmenu-results").firstChild.remove();
@@ -80,12 +80,12 @@
         });
     }
 
-    function recipeCard(recipe){       
+    function recipeCard(recipe) {
 
         const card = document.createElement("div");
         card.classList.add("searchmenu-results-result-container");
 
-        card.addEventListener("click", function (e) {
+        card.addEventListener("click", function(e) {
             window.location.href = "/src/Web/displayRecipe.php?recipeId=" + recipe.id;
         });
 
@@ -108,7 +108,7 @@
 
         document.querySelector(".searchmenu-results").appendChild(card);
 
-        
+
 
     }
 </script>

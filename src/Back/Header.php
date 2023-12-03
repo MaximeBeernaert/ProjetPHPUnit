@@ -9,7 +9,6 @@ if (isset($_POST["categories"])) {
 
     $categoryDAO = new CategoryDAO($db);
     $categories = $categoryDAO->readAll();
-    
-    echo json_encode(array('categories' =>($categories)));
+
+    echo json_encode(array('categories' => ($categories)));
 }
-?>

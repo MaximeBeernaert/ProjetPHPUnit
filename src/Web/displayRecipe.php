@@ -1,188 +1,188 @@
 <DOCTYPE html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../Style/displayRecipe.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="../Style/displayRecipe.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-</head>
+    </head>
 
-<?php
+    <?php
     require_once __DIR__ . '/../Web/Header.php';
-?>
+    ?>
 
-<div class="recipemenu">
-    <div class="recipemenu-title">
-        <div class="recipemenu-title-text" id="recipemenu-title-text">
-            <!-- Title -->
-        </div>
-    </div>
-    <div class="recipemenu-image">
-        <div class="recipemenu-image-content" id="recipemenu-image-text">
-            <img class="recipemenu-image-content-img" id="recipemenu-image-content-img" src="" alt="">
-        </div>
-    </div>
-    <div class="recipemenu-info">
-        <div class="recipemenu-info-text" id="recipemenu-info-text">
-            <div class="recipemenu-info-text-difficulty" id="recipemenu-info-text-difficulty">
-                <!-- Difficulty -->
-            </div>
-            <div class="recipemenu-info-text-slash" id="recipemenu-info-text-slash">
-                -
-            </div>
-            <div class="recipemenu-info-text-time" id="recipemenu-info-text-time">
-                <!-- Time -->
+    <div class="recipemenu">
+        <div class="recipemenu-title">
+            <div class="recipemenu-title-text" id="recipemenu-title-text">
+                <!-- Title -->
             </div>
         </div>
+        <div class="recipemenu-image">
+            <div class="recipemenu-image-content" id="recipemenu-image-text">
+                <img class="recipemenu-image-content-img" id="recipemenu-image-content-img" src="" alt="">
+            </div>
+        </div>
+        <div class="recipemenu-info">
+            <div class="recipemenu-info-text" id="recipemenu-info-text">
+                <div class="recipemenu-info-text-difficulty" id="recipemenu-info-text-difficulty">
+                    <!-- Difficulty -->
+                </div>
+                <div class="recipemenu-info-text-slash" id="recipemenu-info-text-slash">
+                    -
+                </div>
+                <div class="recipemenu-info-text-time" id="recipemenu-info-text-time">
+                    <!-- Time -->
+                </div>
+            </div>
+        </div>
+        <div class="recipemenu-ingredients">
+            <div class="recipemenu-ingredients-title" id="recipemenu-ingredients-title">
+                Ingredients
+            </div>
+            <div class="recipemenu-ingredients-list" id="recipemenu-ingredients-list">
+                <!-- Ingredients -->
+            </div>
+        </div>
+        <div class="recipemenu-steps">
+            <div class="recipemenu-steps-title" id="recipemenu-steps-title">
+                Etapes
+            </div>
+            <div class="recipemenu-steps-list" id="recipemenu-steps-list">
+                <!-- Steps -->
+            </div>
+        </div>
     </div>
-    <div class="recipemenu-ingredients">
-        <div class="recipemenu-ingredients-title" id="recipemenu-ingredients-title">
-            Ingredients
-        </div>
-        <div class="recipemenu-ingredients-list" id="recipemenu-ingredients-list">
-            <!-- Ingredients -->
-        </div>
-    </div>
-    <div class="recipemenu-steps">
-        <div class="recipemenu-steps-title" id="recipemenu-steps-title">
-            Etapes
-        </div>
-        <div class="recipemenu-steps-list" id="recipemenu-steps-list">
-            <!-- Steps -->
-        </div>
-    </div>
-</div>
 
 
-<script>
-    $(document).ready(function() {
-        const currentUrl = window.location.href;
+    <script>
+        $(document).ready(function() {
+            const currentUrl = window.location.href;
 
-        // Get search term from URL
-        let params = (new URL(document.location)).searchParams;
-        getRecipe(params.get("recipeId"));
-        getIngredientsByRecipeId(params.get("recipeId"));
-        getStepsByRecipeId(params.get("recipeId"));
-    });
-
-    function getRecipe(recipeId) {
-        let recipe = recipeId;
-        // Do AJAX request when user types in search bar
-        $.ajax({
-            url: '../Back/DisplayRecipe.php',
-            method: 'POST',
-            dataType: 'json',
-            data: {
-                recipe
-            },
-            async:      true,
-            success: function(data) {
-                var recipe = data.recipe;
-                document.getElementById("recipemenu-title-text").innerHTML = recipe.name;
-                document.getElementById("recipemenu-image-content-img").src = recipe.image;
-                document.getElementById("recipemenu-image-content-img").alt = recipe.name;
-
-                document.getElementById("recipemenu-info-text-difficulty").innerHTML = "Difficulté : " + recipe.difficulty;
-                document.getElementById("recipemenu-info-text-time").innerHTML = "Temps : " + recipe.time;
-            }
+            // Get search term from URL
+            let params = (new URL(document.location)).searchParams;
+            getRecipe(params.get("recipeId"));
+            getIngredientsByRecipeId(params.get("recipeId"));
+            getStepsByRecipeId(params.get("recipeId"));
         });
-    }
 
-    function getIngredientsByRecipeId(recipeId) {
-        let ingredients = recipeId;
-        // Do AJAX request when user types in search bar
-        $.ajax({
-            url: '../Back/DisplayRecipe.php',
-            method: 'POST',
-            dataType: 'json',
-            data: {
-                ingredients
-            },
-            async:      true,
-            success: function(data) {            
-                
-                data.ingredients.forEach(ingredient => {
-                    const cardIngredient = document.createElement("div");
-                    cardIngredient.classList.add("recipemenu-ingredients-list-ingredient");
+        function getRecipe(recipeId) {
+            let recipe = recipeId;
+            // Do AJAX request when user types in search bar
+            $.ajax({
+                url: '../Back/DisplayRecipe.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    recipe
+                },
+                async: true,
+                success: function(data) {
+                    var recipe = data.recipe;
+                    document.getElementById("recipemenu-title-text").innerHTML = recipe.name;
+                    document.getElementById("recipemenu-image-content-img").src = recipe.image;
+                    document.getElementById("recipemenu-image-content-img").alt = recipe.name;
 
-                    const cardIngredientName = document.createElement("div");
-                    cardIngredientName.classList.add("recipemenu-ingredients-list-ingredient-name");
+                    document.getElementById("recipemenu-info-text-difficulty").innerHTML = "Difficulté : " + recipe.difficulty;
+                    document.getElementById("recipemenu-info-text-time").innerHTML = "Temps : " + recipe.time;
+                }
+            });
+        }
 
-                    const cardIngredientQuantity = document.createElement("div");
-                    cardIngredientQuantity.classList.add("recipemenu-ingredients-list-ingredient-quantity");
+        function getIngredientsByRecipeId(recipeId) {
+            let ingredients = recipeId;
+            // Do AJAX request when user types in search bar
+            $.ajax({
+                url: '../Back/DisplayRecipe.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    ingredients
+                },
+                async: true,
+                success: function(data) {
 
-                    const cardIngredientImage = document.createElement("div");
-                    cardIngredientImage.classList.add("recipemenu-ingredients-list-ingredient-image");
+                    data.ingredients.forEach(ingredient => {
+                        const cardIngredient = document.createElement("div");
+                        cardIngredient.classList.add("recipemenu-ingredients-list-ingredient");
 
-                    const cardIngredientImageImg = document.createElement("img");
-                    cardIngredientImageImg.classList.add("recipemenu-ingredients-list-ingredient-image-img");
+                        const cardIngredientName = document.createElement("div");
+                        cardIngredientName.classList.add("recipemenu-ingredients-list-ingredient-name");
 
-                    cardIngredientName.innerHTML = ingredient.name;
+                        const cardIngredientQuantity = document.createElement("div");
+                        cardIngredientQuantity.classList.add("recipemenu-ingredients-list-ingredient-quantity");
 
-                    cardIngredientQuantity.innerHTML = ingredient.quantity;
+                        const cardIngredientImage = document.createElement("div");
+                        cardIngredientImage.classList.add("recipemenu-ingredients-list-ingredient-image");
 
-                    cardIngredientImageImg.src = ingredient.image;
-                    cardIngredientImageImg.alt = ingredient.name;
+                        const cardIngredientImageImg = document.createElement("img");
+                        cardIngredientImageImg.classList.add("recipemenu-ingredients-list-ingredient-image-img");
 
-                    cardIngredientImage.appendChild(cardIngredientImageImg);
+                        cardIngredientName.innerHTML = ingredient.name;
 
-                    cardIngredient.appendChild(cardIngredientImage);
+                        cardIngredientQuantity.innerHTML = ingredient.quantity;
 
-                    cardIngredient.appendChild(cardIngredientName);
-                    cardIngredient.appendChild(cardIngredientQuantity);
-                    
-                    document.getElementById("recipemenu-ingredients-list").appendChild(cardIngredient);
-                });
-                
+                        cardIngredientImageImg.src = ingredient.image;
+                        cardIngredientImageImg.alt = ingredient.name;
 
-            }
-        });    
-    }
+                        cardIngredientImage.appendChild(cardIngredientImageImg);
 
-    function getStepsByRecipeId(recipeId){
-        let steps = recipeId;
-        // Do AJAX request when user types in search bar
-        $.ajax({
-            url: '../Back/DisplayRecipe.php',
-            method: 'POST',
-            dataType: 'json',
-            data: {
-                steps
-            },
-            async:      true,
-            success: function(data) {            
-                
-                data.steps.forEach(step => {
-                    const cardstep = document.createElement("div");
-                    cardstep.classList.add("recipemenu-steps-list-step");
+                        cardIngredient.appendChild(cardIngredientImage);
 
-                    const cardstepNumber = document.createElement("div");
-                    cardstepNumber.classList.add("recipemenu-steps-list-step-number");
+                        cardIngredient.appendChild(cardIngredientName);
+                        cardIngredient.appendChild(cardIngredientQuantity);
 
-                    const cardstepDescription = document.createElement("div");
-                    cardstepDescription.classList.add("recipemenu-steps-list-step-description");
+                        document.getElementById("recipemenu-ingredients-list").appendChild(cardIngredient);
+                    });
 
-                    const cardstepSlash = document.createElement("div");
-                    cardstepSlash.classList.add("recipemenu-steps-list-step-slash");
 
-                    cardstepNumber.innerHTML = step.number;
+                }
+            });
+        }
 
-                    cardstepDescription.innerHTML = step.description;
+        function getStepsByRecipeId(recipeId) {
+            let steps = recipeId;
+            // Do AJAX request when user types in search bar
+            $.ajax({
+                url: '../Back/DisplayRecipe.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    steps
+                },
+                async: true,
+                success: function(data) {
 
-                    cardstepSlash.innerHTML = "-";
+                    data.steps.forEach(step => {
+                        const cardstep = document.createElement("div");
+                        cardstep.classList.add("recipemenu-steps-list-step");
 
-                    
-                    cardstep.appendChild(cardstepNumber);
-                    cardstep.appendChild(cardstepSlash);
-                    cardstep.appendChild(cardstepDescription);
-                    
-                    document.getElementById("recipemenu-steps-list").appendChild(cardstep);
-                });
+                        const cardstepNumber = document.createElement("div");
+                        cardstepNumber.classList.add("recipemenu-steps-list-step-number");
 
-            }
-        });    
-    
-    }
-</script>
+                        const cardstepDescription = document.createElement("div");
+                        cardstepDescription.classList.add("recipemenu-steps-list-step-description");
+
+                        const cardstepSlash = document.createElement("div");
+                        cardstepSlash.classList.add("recipemenu-steps-list-step-slash");
+
+                        cardstepNumber.innerHTML = step.number;
+
+                        cardstepDescription.innerHTML = step.description;
+
+                        cardstepSlash.innerHTML = "-";
+
+
+                        cardstep.appendChild(cardstepNumber);
+                        cardstep.appendChild(cardstepSlash);
+                        cardstep.appendChild(cardstepDescription);
+
+                        document.getElementById("recipemenu-steps-list").appendChild(cardstep);
+                    });
+
+                }
+            });
+
+        }
+    </script>

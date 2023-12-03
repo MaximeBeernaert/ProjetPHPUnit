@@ -60,72 +60,69 @@
 
             <div class="header-secondary-container-seerecipes">
                 <h3>Gérer les recettes</h3>
-            
+
             </div>
         </div>
     </div>
 </div>
 
 
-<script>   
-
-
-
-$(document).ready(function() {
-    document.addEventListener("click", function (e) {
-        var c = document.getElementById('categories-result-container');
-        if(c) { c.remove();};
+<script>
+    $(document).ready(function() {
+        document.addEventListener("click", function(e) {
+            var c = document.getElementById('categories-result-container');
+            if (c) {
+                c.remove();
+            };
+        });
     });
-});
 
-// Listener to search terms, send user to search page
-function searchTerms($terms, e) {
-    if($terms.length >= 0) {
-        console.log("/src/Web/Search.php?searchTerm=" + $terms);
-        window.location.href = "/src/Web/Search.php?searchTerm=" + $terms; 
+    // Listener to search terms, send user to search page
+    function searchTerms($terms, e) {
+        if ($terms.length >= 0) {
+            console.log("/src/Web/Search.php?searchTerm=" + $terms);
+            window.location.href = "/src/Web/Search.php?searchTerm=" + $terms;
 
-    }else{
-        console.log("No terms");
-    }
-}
-
-// show a list of categories to be forwarded to
-function showCategories(){
-    var categories='categories';
-    $.ajax({
-        url: '../Back/Header.php',
-        method: 'POST',
-        dataType: 'json',
-        data: {
-            categories
-        },
-        async:      true,
-        success: function(data) {
-            console.log(data.categories);
-
-            const listContainer = document.createElement("div");
-            listContainer.classList.add("categories-result-container");
-            listContainer.setAttribute("id", "categories-result-container");
-
-            const list = document.createElement("div");
-            list.classList.add("categories-result-container-list");
-
-            data.categories.forEach(category => {
-                const listItem = document.createElement("div");
-                listItem.classList.add("categories-result-container-list-item");
-                listItem.setAttribute("onclick", "window.location.href = '/src/Web/Category.php?category=" + category.name + "';");
-                listItem.innerHTML = category.name;
-                list.appendChild(listItem);
-            });
-
-            listContainer.appendChild(list);
-            document.getElementById("header-main-categorylist").appendChild(listContainer);
-
+        } else {
+            console.log("No terms");
         }
-    });
+    }
+
+    // show a list of categories to be forwarded to
+    function showCategories() {
+        var categories = 'categories';
+        $.ajax({
+            url: '../Back/Header.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                categories
+            },
+            async: true,
+            success: function(data) {
+                console.log(data.categories);
+
+                const listContainer = document.createElement("div");
+                listContainer.classList.add("categories-result-container");
+                listContainer.setAttribute("id", "categories-result-container");
+
+                const list = document.createElement("div");
+                list.classList.add("categories-result-container-list");
+
+                data.categories.forEach(category => {
+                    const listItem = document.createElement("div");
+                    listItem.classList.add("categories-result-container-list-item");
+                    listItem.setAttribute("onclick", "window.location.href = '/src/Web/Category.php?category=" + category.name + "';");
+                    listItem.innerHTML = category.name;
+                    list.appendChild(listItem);
+                });
+
+                listContainer.appendChild(list);
+                document.getElementById("header-main-categorylist").appendChild(listContainer);
+
+            }
+        });
 
 
-}
-
-
+    }
 </script>

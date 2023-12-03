@@ -9,6 +9,5 @@ if (isset($_POST["name"])) {
 
     $categoryDAO = new CategoryDAO($db);
     $recipes = $categoryDAO->getRecipesByCategory($name);
-    echo json_encode(array('recipes' =>($recipes)));
+    echo json_encode(array('recipes' => ($recipes)));
 }
-?>
